@@ -1,0 +1,22 @@
+body {
+  background: url("https://cdn5.vedomosti.ru/image/2019/9b/1etete/original-1tuy.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+div {
+    border-radius: 10px; /* закругленные углы блока */
+    background: white; /* Цвет фона,*/
+}
+
+tr.empty1 {
+  background:#F08080;
+}
+
+tr.empty {
+  background:#98FB98;
+}
+
+tr.empty2 {
+   background:#F0E68C;
+}
+

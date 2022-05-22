@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Обновление записи
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+<h1>Обновление записи</h1>
+    <form method="post">
+        <h1>Данные о машине:</h1>
+        <input type="number" step="any" name="number" id="number" class="form-control" value="{{  list.number }}" placeholder="Введите серийный номер"><br>
+        <input type="text" name="type_TO" id="type_TO" class="form-control" value="{{  list.type_TO }}" placeholder="Введите вид ТО"><br>
+        <h1>Гидропередача:</h1>
+        <input type="number" step="any" name="pressure1" id="pressure1" class="form-control" value="{{  list.tr.pressure1 }}" placeholder="Введите давление масла насоса"><br>
+        <input type="number" step="any" name="pressure2" id="pressure2" class="form-control" value="{{  list.tr.pressure2 }}" placeholder="Введите давление на выходе из гидротрансформатора"><br>
+        <input type="number" step="any" name="pressure3" id="pressure3" class="form-control" value="{{  list.tr.pressure3 }}" placeholder="Введите давление в системе смазки"><br>
+        <h1>Дизель-генераторная установка:</h1>
+        <input type="number" step="any" name="pressure_dvs" id="pressure_dvs" class="form-control" value="{{  list.dvs.pressure_dvs }}" placeholder="Введите давление масла"><br>
+        <input type="number" step="any" name="hours" id="hours" class="form-control" value="{{  list.dvs.hours }}" placeholder="Введите наработку"><br>
+    <input type="submit" class="btn btn-success" value="Обновить">
+    </form>
+    </div>
+{% endblock %}

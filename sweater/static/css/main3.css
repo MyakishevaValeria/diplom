@@ -1,0 +1,15 @@
+body {
+  background: url("https://cdn5.vedomosti.ru/image/2019/9b/1etete/original-1tuy.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+form{
+            width:500px; /* ширина блока */
+            height: 355px; /* высота блока */
+            background: #fff; /* фон блока */
+            border-radius: 10px; /* закругленные углы блока */
+            margin: 10% auto; /* отступ сверху и выравнивание по середине */
+            box-shadow: 2px 2px 4px 0px #000000; /* тень блока */
+}
+
+
+

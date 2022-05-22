@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Детали
+{% endblock %}
+
+{% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<div class="container mt-5">
+<h1>Данные о машине:</h1>
+    <div class="alert alert-info">
+        <p>Серийный номер: {{ list.id }}</p>
+        <p>Вид ТО: {{ list.type_TO }}</p>
+        <p>Дата ТО: {{ list.date_TO }}</p>
+        <p>Оценка: {{ list.grade }}</p>
+        <p>Ремонт: {{ list.repair }}</p>
+    </div>
+    <h1>Гидропередача:</h1>
+    <div class="alert alert-info">
+        <p>Давление масла насоса: {{ list.tr.pressure1 }}</p>
+        <p>Давление на выходе из гидротрансформатора: {{ list.tr.pressure2 }}</p>
+        <p>Давление в системе смазки: {{ list.tr.pressure3 }}</p>
+        <p>Оценка гидроперадачи: {{ list.tr.mark_transmission }}</p>
+    </div>
+    <h1>Дизель-генераторная установка:</h1>
+    <div  class="alert alert-info">
+        <table class="table table-sm">
+            <tr><td>Давление масла:</td><td>{{ list.dvs.pressure_dvs }}</td></tr>
+            <tr><td>Наработка:</td><td>{{ list.dvs.hours }}</td></tr>
+            <tr><td>Оценка ДВС:</td><td>{{ list.dvs.mark_dvs }}</td></tr>
+        </table>
+    </div>
+</div>
+ <script src="{{ url_for('static', filename='js/scripts1.js') }}"></script>
+{% endblock %}

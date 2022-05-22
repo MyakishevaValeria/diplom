@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Оценка
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <form method="post">
+        <h1>Данные о машине:</h1>
+        <input type="number" step="any" name="number" id="number" class="form-control" placeholder="Введите серийный номер"><br>
+        <input type="text" name="type_TO" id="type_TO" class="form-control" placeholder="Введите вид ТО"><br>
+        <h1>Гидропередача:</h1>
+        <input type="number" step="any" name="pressure1" id="pressure1" class="form-control" placeholder="Введите давление масла насоса"><br>
+        <input type="number" step="any" name="pressure2" id="pressure2" class="form-control" placeholder="Введите давление на выходе из гидротрансформатора"><br>
+        <input type="number" step="any" name="pressure3" id="pressure3" class="form-control" placeholder="Введите давление в системе смазки"><br>
+        <h1>Дизель-генераторная установка:</h1>
+        <input type="number" step="any" name="pressure_dvs" id="pressure_dvs" class="form-control" placeholder="Введите давление масла"><br>
+        <input type="number" step="any" name="hours" id="hours" class="form-control" placeholder="Введите наработку"><br>
+        <input type="submit" class="btn btn-danger" value="Отправить">
+        <a href="/home" class="btn btn-lg btn-outline-secondary">Назад</a>
+        <div class="form-group" id="process" style="display:none;">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped active bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100" style=""></div>
+        </div>
+        </div>
+        <br><br>
+         {% for cat, msg in get_flashed_messages(True) %}
+        <div class="flash {{cat}}">{{msg}}</div>
+        {%  endfor %}
+    </form>
+</div>
+{% endblock %}
