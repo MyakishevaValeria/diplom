@@ -8,15 +8,12 @@
 <div class="container mt-5">
     <form method="post">
         <h1>Данные о машине:</h1>
-        <input type="number" step="any" name="number" id="number" class="form-control" placeholder="Введите серийный номер"><br>
-        <input type="text" name="type_TO" id="type_TO" class="form-control" placeholder="Введите вид ТО"><br>
-        <h1>Гидропередача:</h1>
-        <input type="number" step="any" name="pressure1" id="pressure1" class="form-control" placeholder="Введите давление масла насоса"><br>
-        <input type="number" step="any" name="pressure2" id="pressure2" class="form-control" placeholder="Введите давление на выходе из гидротрансформатора"><br>
-        <input type="number" step="any" name="pressure3" id="pressure3" class="form-control" placeholder="Введите давление в системе смазки"><br>
-        <h1>Дизель-генераторная установка:</h1>
-        <input type="number" step="any" name="pressure_dvs" id="pressure_dvs" class="form-control" placeholder="Введите давление масла"><br>
-        <input type="number" step="any" name="hours" id="hours" class="form-control" placeholder="Введите наработку"><br>
+        <input type="number" step="any" name="id_number" id="id_number" class="form-control" placeholder="Введите серийный номер"><br>
+        <input type="date" name="date_manufacture" id="date_manufacture" class="form-control" placeholder="Введите дату иизготовления"><br>
+        <input type="text" name="name_factory" id="name_factory" class="form-control" placeholder="Введите завод изготовителя"><br>
+        <input type="number" step="any" name="lifetime" id="lifetime" class="form-control" placeholder="Введите срок эксплуатации"><br>
+        <input type="text" step="any" name="owner" id="owner" class="form-control" placeholder="Введите собственника"><br>
+        <input type="date" step="any" name="date_start" id="date_start" class="form-control" placeholder="Дата ввода в эксплуатацию"><br>
         <input type="submit" class="btn btn-danger" value="Отправить">
         <a href="/home" class="btn btn-lg btn-outline-secondary">Назад</a>
         <div class="form-group" id="process" style="display:none;">

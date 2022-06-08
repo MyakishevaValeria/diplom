@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Детали
+{% endblock %}
+
+{% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<div class="container mt-5">
+<h1>Данные о машине:</h1>
+    <div class="alert alert-info">
+        <p>Серийный номер: {{ list.id_number }}</p>
+        <p>Дата изготовления: {{ list.date_manufacture }}</p>
+        <p>Завод изготовления: {{ list.name_factory }}</p>
+        <p>Срок эксплуатации: {{ list.lifetime }}</p>
+        <p>Собственник: {{ list.owner }}</p>
+        <p>Дата ввода в эксплуатацию: {{ list.date_start }}</p>
+        <p>Оценка: {{ list.grade }}</p>
+        <p>Статус: {{ list.status }}</p>
+    </div>
+</div>
+
+<div class="container mt-5">
+<h1>Технические обслуживания</h1>
+    <p>
+        <a class="btn btn-danger" href="/grade/{{ list.id_machine }}">Провести оценку</a>
+        <a class="btn btn-danger" href="/excel">Скачать Execl-файл</a>
+        {% for cat, msg in get_flashed_messages(True) %}
+        <div class="flash {{cat}}">{{msg}}</div>
+        {%  endfor %}
+    </p>
+<canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" width="50" height="20" style="display: block; width: 200px; height: 100px;"></canvas>
+
+    <div id="remove">
+       <form action="/remove" method="POST">
+           <input href="/modal" class="btn btn-danger my-2" type="submit" value="Удалить выбранные записи">
+           <div class="table-responsive">
+               <table class="table table-striped table-sm">
+                   <thead>
+
+                   <tr>
+                       <th></th>
+                       <th></th>
+                       <th>Номер ТО</th>
+                       <th>Вид ТО</th>
+                       <th>Оценка</th>
+                       <th>Дата диагностики</th>
+                       <th></th>
+
+                   </tr>
+                   </thead>
+                   <tbody>
+                    {% for m in list1 %}
+                    <tr {% if m.grade_TO == 4.6 %} style='background-color:#F0E68C'
+                        {% elif m.grade_TO == 4.3 %} style='background-color:#FA8072'
+                   {% else %} style='background-color:#98FB98'{% endif %} in>
+                    <th><input type="checkbox" name="check" id="{{m.id_maintenance}}" value="{{m.id_maintenance}}"></th>
+                    <td>{{ m.id_maintenance }}</td>
+                    <td>{{ m.type }}</td>
+                    <td>{{ m.grade_TO }}</td>
+                        <td>{{ m.date_maintenance }}</td>
+                     <td></td>
+                    <th><a href="/grade_detail/{{ m.id_maintenance }}" class="btn btn-sm btn-outline-secondary ">Детальнее</a></th>
+
+                    </tr>
+                    {% endfor %}
+
+                   </tbody>
+               </table>
+
+           </div>
+       </form>
+        <div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const labels =  [{% for m in list1 %}
+"{{ m.date_maintenance }}",
+{% endfor %}];
+
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: '{{ legend }}',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+      data: [{% for m in list1 %}
+"{{ m.grade_TO }}",
+{% endfor %}],
+    }]
+  };
+
+  const config = {
+    type: 'line',
+    data: data,
+    options: {}
+  };
+</script>
+<script>
+  const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+</script>
+   </div>
+
+</div>
+
+
+ <script src="{{ url_for('static', filename='js/scripts1.js') }}"></script>
+{% endblock %}
