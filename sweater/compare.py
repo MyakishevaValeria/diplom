@@ -1,107 +1,280 @@
-rep = ""
-def grade_wheel(a, b, c, d, e, f, g, h, i, j, k, l):
-    list = [a, b, c, d, e, f, g, h, i, j, k, l]
-    if all(item == 3 for item in list):
-        result = 10
-        rep = "456"
-    elif any(item == 4 for item in list) or any(item == 2 for item in list):
-        result = 3
-    else:
-        result = 0
-    return result
+from sweater.models import Maintenance, Transmission, Dvs, Wheel, Springs, Device, Brakes, Pneumatics
+from sweater import app, db
+
+class Train_maintenance(object):
+    wheels: int
+    springs: int
+    repair: str
+    transmissions: float
+    dvs: float
+    pneumatics: float
+    brake: float
+    device: int
+    markM: float
+
+    def grade_wheels(self, wheels: [int]):
+        if all(item == 3 for item in wheels):
+            self.wheels = 10
+        elif any(item == 4 for item in wheels) or any(item == 2 for item in wheels):
+            self.wheels = 3
+        else:
+            self.wheels = 0
+
+    def grade_springs(self, springs: [int]):
+        if all(item == 68 for item in springs):
+            self.springs = 10
+        elif any(item == 69 for item in springs) or any(item == 67 for item in springs):
+            self.springs = 3
+        else:
+            self.springs = 0
+
+    def grade_transmissions(self, oils: [float]):
+        if 1.20 < oils[0] < 1.25:
+            result_a = 10
+        elif 1.15 < oils[0] < 1.20 or 1.25 < oils[0] < 1.30:
+            result_a = 3
+        else:
+            result_a = 0
+            self.repair += "Замените масло в двигателе"
+        if 0.35 < oils[1] < 0.4:
+            result_b = 10
+        elif 0.3 < oils[1] < 0.35 or 0.4 < oils[1] < 0.45:
+            result_b = 3
+        else:
+            result_b = 0
+            self.repair += "Замените охлаждающую жидкость"
+        if 0.08 < oils[2] < 0.12:
+            result_c = 10
+        elif 0.05 < oils[2] < 0.08 or 0.12 < oils[2] < 0.15:
+            result_c = 3
+        else:
+            result_c = 0
+            self.repair += "Проверить давление"
+        self.transmissions = (result_a + result_b + result_c) / 3
+
+    def grade_dvs(self, dvs: [float]):
+        if 1.20 < dvs[0] < 1.25:
+            result_a = 10
+        elif 1.15 < dvs[0] < 1.20 or 1.25 < dvs[0] < 1.30:
+            result_a = 3
+        else:
+            result_a = 0
+            self.repair += "Замените масло в двигателе"
+        if 0.35 < dvs[1] < 0.4:
+            result_b = 10
+        elif 0.3 < dvs[1] < 0.35 or 0.4 < dvs[1] < 0.45:
+            result_b = 3
+        else:
+            result_b = 0
+            self.repair += "Замените охлаждающую жидкость"
+        if 0.08 < dvs[2] < 0.12:
+            result_c = 10
+        elif 0.05 < dvs[2] < 0.08 or 0.12 < dvs[2] < 0.15:
+            result_c = 3
+        else:
+            result_c = 0
+            self.repair += "Проверить давление"
+        if 0.35 < dvs[3] < 0.4:
+            result_d = 10
+        elif 0.3 < dvs[3] < 0.35 or 0.4 < dvs[3] < 0.45:
+            result_d = 3
+        else:
+            result_d = 0
+            self.repair += "Замените охлаждающую жидкость"
+        if 0.08 < dvs[4] < 0.12:
+            result_e = 10
+        elif 0.05 < dvs[4] < 0.08 or 0.12 < dvs[4] < 0.15:
+            result_e = 3
+        else:
+            result_e = 0
+            self.repair += "Проверить давление"
+        self.dvs = (result_a + result_b + result_c + result_d + result_e) / 5
+
+    def grade_device(self, device: [str]):
+        if all(item == 'Исправен' for item in device):
+            self.device = 10
+        else:
+            self.device = 0
+
+    def grade_brake(self, brake: [float]):
+        if 1.20 < brake[0] < 1.25:
+            result_a = 10
+        elif 1.15 < brake[0] < 1.20 or 1.25 < brake[0] < 1.30:
+            result_a = 3
+        else:
+            result_a = 0
+            self.repair += "Замените масло в двигателе"
+        if 0.35 < brake[1] < 0.4:
+            result_b = 10
+        elif 0.3 < brake[1] < 0.35 or 0.4 < brake[1] < 0.45:
+            result_b = 3
+        else:
+            result_b = 0
+            self.repair += "Замените охлаждающую жидкость"
+        self.brake = (result_a + result_b) / 2
+
+    def complete_grade(self):
+        self.markM = (self.wheels + self.springs + self.transmissions +
+                      self.brake + self.device + self.dvs + self.pneumatics)/7
+
+    def status(self):
+        if (self.wheels == self.springs == self.dvs == self.transmissions ==
+                self.pneumatics == self.device == self.brake == 10.0):
+            self.status = "Допущен"
+        elif self.repair != "":
+            self.status = "Недопущен"
+
+    def safeMaintenance(self, wheels: [int], springs: [int], dvs: [float], transmission: [float],
+                                                     pneumatics: [float], device: [str], brake: [int], type_oil,
+                                                     data_check, type, date_maintenance, id):
+        # положить данныые тех обслуживания в sql
+        try:
+            m = Maintenance(type=type, date_maintenance=date_maintenance, grade_TO=self.markM, repair=self.repair,
+                            id_machine=id)
+            db.session.add(m)
+            db.session.flush()
+            w = Wheel(first_across_rl=wheels[0], first_across_rr=wheels[1], first_across_ll=wheels[2],
+                      first_across_lr=wheels[3], second_across_rl=wheels[4], second_across_rr=wheels[5],
+                      second_across_ll=wheels[6], second_across_lr=wheels[7], first_lateral_r=wheels[8],
+                      first_lateral_l=wheels[9], second_lateral_r=wheels[10], second_lateral_l=wheels[11],
+                      grade_wheel=self.wheels, maintenance_id=m.id_maintenance)
+            db.session.add(w)
+            db.session.commit()
+
+            s = Springs(first_r_spring_H1=springs[0], first_r_spring_H2=springs[1],
+                        first_l_spring_H1=springs[2], first_l_spring_H2=springs[3], second_r_spring_H1=springs[4],
+                        second_r_spring_H2=springs[5], second_l_spring_H1=springs[6], second_l_spring_H2=springs[7],
+                        first_r_spring_m=springs[8], first_l_spring_m=springs[9], second_r_spring_m=springs[10],
+                        second_l_spring_m=springs[11], grade_spring=self.springs, maintenance_id=m.id_maintenance)
+            db.session.add(s)
+            db.session.commit()
+
+            d = Dvs(time=dvs[0], type_oil=type_oil, amount_oil=dvs[2], pressure_oil=dvs[3], tension=dvs[4],
+                    voltage=dvs[5], grade_dvs=self.dvs, maintenance_id=m.id_maintenance)
+            db.session.add(d)
+            db.session.commit()
+
+            t = Transmission(pressure_oil_p=transmission[0], pressure_oil_t=transmission[1],
+                             pressure_oil_s=transmission[2],
+                             grade_transmission=self.transmissions, maintenance_id=m.id_maintenance)
+            db.session.add(t)
+            db.session.commit()
+
+            p = Pneumatics(compressor=pneumatics[0], density_PM=pneumatics[1], density_TM=pneumatics[2], density_TC=pneumatics[3],
+                           time_TC=pneumatics[4], density_UR=pneumatics[5], time_TM=pneumatics[6], time_UP=pneumatics[7],
+                           reducer=pneumatics[8], pace_1=pneumatics[9], pace_2=pneumatics[10], pace_3=pneumatics[11],
+                           EPK=pneumatics[12], grade_pneumatics=self.pneumatics, maintenance_id=m.id_maintenance)
+            db.session.add(p)
+            db.session.commit()
+
+            de = Device(bel=device[0], bil1=device[1], bil2=device[2], bkr=device[3], dup=device[4],
+                        grade_device=self.device, maintenance_id=m.id_maintenance)
+            db.session.add(de)
+            db.session.commit()
+
+            b = Brakes(data_check=data_check, depth=brake[0], rod=brake[0], grade_brake=self.brake,
+                       maintenance_id=m.id_maintenance)
+            db.session.add(b)
+            db.session.commit()
+        except:
+            print("ошибка")
+
+    def grade_pneumatics(self, pneumatics: [float]):
+        if 1.20 < pneumatics[0] < 1.25:
+            result_a = 10
+        elif 1.15 < pneumatics[0] < 1.20 or 1.25 < pneumatics[0] < 1.30:
+            result_a = 3
+        else:
+            result_a = 0
+            self.repair += "Замените масло в двигателе"
+        if 0.35 < pneumatics[1] < 0.4:
+            result_b = 10
+        elif 0.3 < pneumatics[1] < 0.35 or 0.4 < pneumatics[1] < 0.45:
+            result_b = 3
+        else:
+            result_b = 0
+            self.repair += "Замените охлаждающую жидкость"
+        if 0.08 < pneumatics[2] < 0.12:
+            result_c = 10
+        elif 0.05 < pneumatics[2] < 0.08 or 0.12 < pneumatics[2] < 0.15:
+            result_c = 3
+        else:
+            result_c = 0
+            self.repair += "Проверить давление"
+        if 0.35 < pneumatics[3] < 0.4:
+            result_d = 10
+        elif 0.3 < pneumatics[3] < 0.35 or 0.4 < pneumatics[3] < 0.45:
+            result_d = 3
+        else:
+            result_d = 0
+            self.repair += "Замените охлаждающую жидкость"
+        if 0.08 < pneumatics[4] < 0.12:
+            result_e = 10
+        elif 0.05 < pneumatics[4] < 0.08 or 0.12 < pneumatics[4] < 0.15:
+            result_e = 3
+        else:
+            result_e = 0
+            self.repair += "Проверить давление"
+        if 1.20 < pneumatics[0] < 1.25:
+            result_f = 10
+        elif 1.15 < pneumatics[0] < 1.20 or 1.25 < pneumatics[0] < 1.30:
+            result_f = 3
+        else:
+            result_f = 0
+            self.repair += "Замените масло в двигателе"
+        if 0.35 < pneumatics[1] < 0.4:
+            result_g = 10
+        elif 0.3 < pneumatics[1] < 0.35 or 0.4 < pneumatics[1] < 0.45:
+            result_g = 3
+        else:
+            result_g = 0
+            self.repair += "Замените охлаждающую жидкость"
+        if 0.08 < pneumatics[2] < 0.12:
+            result_h = 10
+        elif 0.05 < pneumatics[2] < 0.08 or 0.12 < pneumatics[2] < 0.15:
+            result_h = 3
+        else:
+            result_h = 0
+            self.repair += "Проверить давление"
+        if 0.35 < pneumatics[3] < 0.4:
+            result_i = 10
+        elif 0.3 < pneumatics[3] < 0.35 or 0.4 < pneumatics[3] < 0.45:
+            result_i = 3
+        else:
+            result_i = 0
+            self.repair += "Замените охлаждающую жидкость"
+        if 0.08 < pneumatics[4] < 0.12:
+            result_j = 10
+        elif 0.05 < pneumatics[4] < 0.08 or 0.12 < pneumatics[4] < 0.15:
+            result_j = 3
+        else:
+            result_j = 0
+            self.repair += "Проверить давление"
+        if 1.20 < pneumatics[0] < 1.25:
+            result_k = 10
+        elif 1.15 < pneumatics[0] < 1.20 or 1.25 < pneumatics[0] < 1.30:
+            result_k = 3
+        else:
+            result_k = 0
+            self.repair += "Замените масло в двигателе"
+        if 0.35 < pneumatics[1] < 0.4:
+            result_l = 10
+        elif 0.3 < pneumatics[1] < 0.35 or 0.4 < pneumatics[1] < 0.45:
+            result_l = 3
+        else:
+            result_l = 0
+            self.repair += "Замените охлаждающую жидкость"
+        if 0.08 < pneumatics[2] < 0.12:
+            result_m = 10
+        elif 0.05 < pneumatics[2] < 0.08 or 0.12 < pneumatics[2] < 0.15:
+            result_m = 3
+        else:
+            result_m = 0
+            self.repair += "Проверить давление"
+        self.pneumatics = (result_a + result_b + result_c + result_d + result_e + result_f + result_g +
+                           result_h + result_i + result_j + result_k + result_l + result_m) / 13
 
 
-def grade_spring(a, b, c, d, e, f, g, h, i, j, k, l):
-    list = [a, b, c, d, e, f, g, h, i, j, k, l]
-    if all(item == 68 for item in list):
-        result = 10
-    elif any(item == 69 for item in list) or any(item == 67 for item in list):
-        result = 3
-    else:
-        result = 0
-    return result
 
-
-def grade_dvs(a, b, c, d, e):
-    if a < 1250 and b == 32 and 4 < c < 7 and 8 < d < 10 and 12 < e < 12.8:
-        result = 10
-    elif (1250 < a < 1500 or b == 31 or b == 33 or 2.5 < c < 4 or 7 < c < 8.5
-          or d == 7 or d == 11 or e == 12 or e == 12.8):
-        result = 3
-    else:
-        result = 0
-    return result
-
-repair = ''
-def grade_transmission(a, b, c):
-    global repair
-    if 1.20 < a < 1.25:
-        result_a = 10
-    elif 1.15 < a < 1.20 or 1.25 < a < 1.30:
-        result_a = 3
-    else:
-        result_a = 0
-        repair = repair + "Замените масло в двигателе"
-    if 0.35 < b < 0.4:
-        result_b = 10
-    elif 0.3 < b < 0.35 or 0.4 < b < 0.45:
-        result_b = 3
-    else:
-        result_b = 0
-        repair = repair + "Замените охлаждающую жидкость"
-    if 0.08 < c < 0.12:
-        result_c = 10
-    elif 0.05 < c < 0.08 or 0.12 < c < 0.15:
-        result_c = 3
-    else:
-        result_c = 0
-        repair = repair + "Проверить давление"
-    result = (result_a+result_b+result_c)/3
-    return result
-
-
-def grade_pneumatics(a, b, c, d, e, f, g, h, i, j, k, l, m):
-    if (7.2 < a < 8.2 and b < 0.2 and c == 0.2 and d == 0.2 and 13 < e < 15 and f < 0.1
-            and g < 4 and 30 < h < 40 and 5.0 < i < 5.3 and 4.0 <j< 5.0 and 80 < k < 100 and l < 3 and m < 7):
-        result = 10
-    elif (a == 7.2 or 8.2 == a or 0.2 == b or c == 0.3 or d == 0.3 or e == 13 or f == 0.1
-            or g == 4 or 30 == h or h == 40 or 5.0 == i or i == 5.3 or 4.0 == j or j == 5.0
-            or 80 == k or k == 100 or l == 3 or m == 7.1 or m == 6.9):
-        result = 3
-    else:
-        result = 0
-    return result
-
-
-def grade_device(a, b, c, d, e):
-    list = [a, b, c, d, e]
-    if all(item == 'Исправен' for item in list):
-        result = 10
-    else:
-        result = 0
-    return result
-
-
-def grade_brake(a, b):
-    if a == 20 and 40 < b < 70:
-        result = 10
-    elif a == 19 or a == 21 or 70 < b <100:
-        result = 3
-    else:
-        result = 0
-    return result
-
-
-def markM(a, b, c, d, e, f, g):
-    res = (a+b+c+d+e+f+g)/7
-    print(res)
-    return res
-
-
-def repairM():
-    global repair
-    if repair == '':
-        repair = 'реммонт не требуется'
-    return repair
 
 
