@@ -1,15 +1,11 @@
 $('tr').each(function(){
   $(this).find('td').each(function(){
-    if ($(this).html() == '35') {
+    if ($(this).html() == 'допущен') {
       $(this).parent('tr').addClass('empty');
       return false;
     }
-    if ($(this).html() == '32') {
+    if ($(this).html() == "не допущен") {
       $(this).parent('tr').addClass('empty1');
-      return false;
-    }
-    if ($(this).html() == "допущен") {
-      $(this).parent('tr').addClass('empty2');
       return false;
     }
   });

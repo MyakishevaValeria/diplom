@@ -18,7 +18,11 @@ table.empty {
 .on {
     color: red;
 }
+header{
+    background-color: white;
 
+
+}
 
 tr.empty {
   background:#98FB98;

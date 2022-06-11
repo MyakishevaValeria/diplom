@@ -3,6 +3,7 @@ from flask_login import login_user, login_required, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 import pandas as pd  # pip install pandas
 import sqlite3
+import xlsxwriter
 
 import compare
 
@@ -30,20 +31,21 @@ def create():
 @app.route("/grade/<int:id>", methods=("POST", "GET"))
 @login_required
 def grade(id):
+    info = []
     info = Machines.query.get(id)
     if request.method == "POST":
         forms_data = request.form
         type = request.form['type']
         date_maintenance = request.form['date_maintenance']
         wheels = []
-        for key, value in forms_data:
+        for key, value in forms_data.items():
             if 'across' in key:
                 wheels.append(int(value))
             if 'lateral' in key:
                 wheels.append(int(value))
 
         springs = []
-        for key, value in forms_data:
+        for key, value in forms_data.items():
             if 'spring' in key:
                 springs.append(int(value))
 
@@ -87,12 +89,15 @@ def grade(id):
         brake.append(request.form.get('depth', type=float))
         brake.append(request.form.get('rod', type=float))
 
-        train = Train(id, wheels, springs, dvs, transmission, pneumatics, device, brake, type_oil, data_check, type, date_maintenance)
-        grade_TO = train.make_maintenance()
-
-        info.grade = grade_TO
-        info.status = train.change_statis(id)
-
+        train = Train(id, info, wheels, springs, dvs, transmission, pneumatics, device, brake, type_oil, data_check, type, date_maintenance)
+        train.make_maintenance()
+        #Train.sql(info)
+        #info.grade = grade_TO
+        #info.status = train.change_statis(id)
+        #try:
+        #    db.session.commit()
+        #except:
+        #    print("ошибка")
     return render_template("grade.html", title="Провести оценку")
 
 
@@ -144,7 +149,7 @@ def register():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('posts'))
+    return redirect(url_for('home'))
 
 
 @app.after_request
@@ -174,30 +179,25 @@ def machine_detail(id):
     info1 = []
     try:
         info = Machines.query.get(id)
-        info1 = Maintenance.query.filter_by(id_machine=id).order_by(Maintenance.date_maintenance.desc()).all()
+        info1 = Maintenance.query.filter_by(id_machine=id).order_by().all()
     except:
         print("ошибка")
-    legend = 'Monthly Data'
-    labels = Maintenance.query.all()
-    values = Maintenance.query.order_by(Maintenance.grade_TO).all()
-    print(values)
-    return render_template("machine_detail.html", list=info, list1=info1, values=values, labels=labels,
-                           legend=legend)
+    return render_template("machine_detail.html", list=info, list1=info1)
 
 
 @app.route('/grade_detail/<int:id>')
 @login_required
 def grade_detail(id):
     info = []
-    info1 = []
+    info_to = []
 
     try:
         info = Maintenance.query.get(id)
-        info1 = Maintenance.query.filter_by(id_machine=id).order_by(Maintenance.date_maintenance.desc()).all()
+        info_to = Maintenance.query.filter_by(id_machine=id).order_by(Maintenance.date_maintenance.desc()).all()
     except:
         print("ошибка")
 
-    return render_template("grade_detail.html", list=info, list1=info1)
+    return render_template("grade_detail.html", list=info, list1=info_to)
 
 
 @app.route('/maintenance/<int:id>')
@@ -205,42 +205,20 @@ def grade_detail(id):
 def maintenance_detail(id):
     info = []
     try:
-        info = Maintenance.query.all()
         info = Maintenance.query.get(id)
     except:
         print("ошибка")
     return render_template("maintenance_detail.html", list=info)
 
 
-@app.route('/remove', methods=["POST"])
+@app.route('/remove-grade', methods=["POST"])
 @login_required
-def remove():
+def remove_grade():
     checked_boxes = request.form.getlist("check")
     for id in checked_boxes:
         Maintenance.query.all()
-        Transmission.query.all()
-        Dvs.query.all()
-        Wheel.query.all()
-        Springs.query.all()
-        Pneumatics.query.all()
-        Device.query.all()
-        Brakes.query.all()
-        wheel = Wheel.query.filter_by(maintenance_id=id).first()
-        springs = Springs.query.filter_by(maintenance_id=id).first()
-        pneumatics = Pneumatics.query.filter_by(maintenance_id=id).first()
-        device = Device.query.filter_by(maintenance_id=id).first()
-        brakes = Brakes.query.filter_by(maintenance_id=id).first()
-        transmission = Transmission.query.filter_by(maintenance_id=id).first()
-        dvs = Dvs.query.filter_by(maintenance_id=id).first()
         to = Maintenance.query.get_or_404(id)
         try:
-            db.session.delete(wheel)
-            db.session.delete(springs)
-            db.session.delete(pneumatics)
-            db.session.delete(device)
-            db.session.delete(brakes)
-            db.session.delete(transmission)
-            db.session.delete(dvs)
             db.session.delete(to)
             db.session.commit()
         except:
@@ -249,20 +227,34 @@ def remove():
     return redirect('/home')
 
 
-@app.route('/posts/<int:id>/update', methods=['POST', 'GET'])
+@app.route('/remove', methods=["POST"])
 @login_required
-def post_update(id):
+def remove():
+    checked_boxes = request.form.getlist("check")
+    for id in checked_boxes:
+        Machines.query.all()
+        machines = Machines.query.get_or_404(id)
+        try:
+            db.session.delete(machines)
+            db.session.commit()
+        except:
+            return "При удалении произошла ошибка"
+
+    return redirect('/home')
+
+
+@app.route('/machine/<int:id>/update', methods=['POST', 'GET'])
+@login_required
+def machine_update(id):
     info = []
-    info = To.query.all()
-    info = To.query.get(id)
+    info = Machines.query.get(id)
     if request.method == "POST":
-        info.number = request.form['number']
-        info.type_TO = request.form['type_TO']
-        info.pressure1 = request.form['pressure1']
-        info.pressure2 = request.form['pressure2']
-        info.pressure3 = request.form['pressure3']
-        info.pressure_dvs = request.form['pressure_dvs']
-        info.hours = request.form['hours']
+        info.id_number = request.form['id_number']
+        info.date_manufacture = request.form['date_manufacture']
+        info.name_factory = request.form['name_factory']
+        info.lifetime = request.form['lifetime']
+        info.owner = request.form['owner']
+        info.date_start = request.form['date_start']
 
         try:
             db.session.commit()
@@ -271,7 +263,7 @@ def post_update(id):
             print("ошибка")
     else:
 
-        return render_template("post_update.html", list=info)
+        return render_template("machine_update.html", list=info)
 
 
 @app.route('/excel')
@@ -281,6 +273,18 @@ def excel():
         'SELECT id_maintenance, type, date_maintenance, grade_TO, repair FROM Maintenance WHERE id_machine=1', conn)
     df.columns = ['Номер', 'Тип ТО', 'Дата ТО', 'Оценка', 'Ремонт']
     df.to_excel(r'C:/Users/Admin/PycharmProjects/diplom/result.xlsx', sheet_name='Sheet1')
+    wb = xlsxwriter.Workbook('C:/Users/Admin/PycharmProjects/diplom/result.xlsx')
+    ws = wb.add_worksheet()
+
+    f1 = wb.add_format({'font_color': 'blue', 'bold': True})
+    ws.conditional_format('A1:D4',
+                          {'type': 'formula',
+                           'criteria': '=AVERAGE($B1:$D1)>60',
+                           'value': 50,
+                           'format': f1
+                           })
+    wb.close()
+
     flash('Файл успешно скачен в раздел загрузки', category='success')
     return redirect('/home')
 

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Обновление записи
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+<h1>Обновление записи</h1>
+    <form method="post">
+        <h1>Данные о машине:</h1>
+        <input type="number" step="any" name="id_number" id="id_number" class="form-control" value="{{  list.id_number }}" placeholder="Введите серийный номер"><br>
+        <input type="date" name="date_manufacture" id="date_manufacture" class="form-control" value="{{  list.date_manufacture }}" placeholder="Введите дату иизготовления"><br>
+        <input type="text" name="name_factory" id="name_factory" class="form-control" value="{{  list.name_factory }}" placeholder="Введите завод изготовителя"><br>
+        <input type="number" step="any" name="lifetime" id="lifetime" class="form-control" value="{{  list.lifetime }}" placeholder="Введите срок эксплуатации"><br>
+        <input type="text" step="any" name="owner" id="owner" class="form-control" value="{{  list.owner }}" placeholder="Введите собственника"><br>
+        <input type="date" step="any" name="date_start" id="date_start" class="form-control" value="{{  list.date_start }}" placeholder="Дата ввода в эксплуатацию"><br>
+        <input type="submit" class="btn btn-danger" value="Отправить">
+        <a href="/home" class="btn btn-lg btn-outline-secondary">Назад</a>
+        <div class="form-group" id="process" style="display:none;">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped active bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100" style=""></div>
+        </div>
+        </div>
+        <br><br>
+         {% for cat, msg in get_flashed_messages(True) %}
+        <div class="flash {{cat}}">{{msg}}</div>
+        {%  endfor %}
+    </form>
+    </div>
+{% endblock %}

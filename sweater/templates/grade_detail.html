@@ -11,11 +11,11 @@
 
 
         <h1>Техническое обслуживание:</h1>
- <div class="alert alert-info">
+ <div class="alert alert-dark">
         <p>Номер ТО: {{ list.id_maintenance }}</p>
         <p>Вид ТО: {{ list.type }}</p>
         <p>Дата ТО: {{ list.date_maintenance }}</p>
-        <p>Оценка: {{ list.grade }}</p>
+        <p>Оценка: {{ list.grade_TO }}</p>
         <p>Ремонт: {{ list.repair }}</p>
     </div>
            <h1>Замер разбега колёсных пар в буксовых направляющих</h1>
@@ -43,21 +43,45 @@
                  <th></th>
    </tr>
     </thead>
-   <tr><td>1-я колёсная пара</td>
-       <td>{{ list.d1.first_across_rl }}</td>
-       <td>{{ list.d1.first_across_rr }}</td>
-       <td>{{ list.d1.first_across_ll }}</td>
-       <td>{{ list.d1.first_across_lr }}</td>
-       <td>{{ list.d1.first_lateral_r }}</td>
-       <td>{{ list.d1.first_lateral_l }}</td>
+   <tr align="center"><td>1-я колёсная пара</td>
+       <td {% if list.d1.first_across_rl < 3 %} style='background-color:#98FB98'
+               {% elif 2 < list.d1.first_across_rl< 5 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d1.first_across_rl }}</td>
+       <td {% if list.d1.first_across_rr < 3 %} style='background-color:#98FB98'
+               {% elif 2 < list.d1.first_across_rr< 5 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d1.first_across_rr }}</td>
+       <td {% if list.d1.first_across_ll < 3 %} style='background-color:#98FB98'
+               {% elif 2 < list.d1.first_across_ll< 5 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d1.first_across_ll }}</td>
+       <td {% if list.d1.first_across_lr < 3 %} style='background-color:#98FB98'
+               {% elif 2 < list.d1.first_across_lr< 5 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d1.first_across_lr }}</td>
+       <td {% if list.d1.first_lateral_r < 3 %} style='background-color:#98FB98'
+               {% elif 2 < list.d1.first_lateral_r< 5 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d1.first_lateral_r }}</td>
+       <td {% if list.d1.first_lateral_l < 3 %} style='background-color:#98FB98'
+               {% elif 2 < list.d1.first_lateral_l< 5 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d1.first_lateral_l }}</td>
    </tr>
-             <tr><td>2-я колёсная пара</td>
-       <td>{{ list.d1.second_across_rl }}</td>
-       <td>{{ list.d1.second_across_rr }}</td>
-       <td>{{ list.d1.second_across_ll }}</td>
-       <td>{{ list.d1.second_across_lr }}</td>
-       <td>{{ list.d1.second_lateral_r }}</td>
-       <td>{{ list.d1.second_lateral_l }}</td>
+             <tr align="center"><td>2-я колёсная пара</td>
+       <td {% if list.d1.second_across_rl < 3 %} style='background-color:#98FB98'
+               {% elif 2 < list.d1.second_across_rl< 5 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d1.second_across_rl }}</td>
+       <td {% if list.d1.second_across_rr < 3 %} style='background-color:#98FB98'
+               {% elif 2 < list.d1.second_across_rr< 5 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d1.second_across_rr }}</td>
+       <td {% if list.d1.second_across_ll < 3 %} style='background-color:#98FB98'
+               {% elif 2 < list.d1.second_across_ll< 5 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d1.second_across_ll }}</td>
+       <td {% if list.d1.second_across_lr < 3 %} style='background-color:#98FB98'
+               {% elif 2 < list.d1.second_across_lr< 5 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d1.second_across_lr }}</td>
+       <td {% if list.d1.second_lateral_r < 3 %} style='background-color:#98FB98'
+               {% elif 2 < list.d1.second_lateral_r< 5 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d1.second_lateral_r }}</td>
+       <td {% if list.d1.second_lateral_l < 3 %} style='background-color:#98FB98'
+               {% elif 2 < list.d1.second_lateral_l< 5 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d1.second_lateral_l }}</td>
    </tr>
   </table>
                  <h1>Замер рессорного подвешивания</h1>
@@ -78,7 +102,7 @@
    </tr>
              <tr align="center">
     <th>Правый край Н1</th>
-    <th>Левый крайН2</th>
+    <th>Левый край Н2</th>
        <th>Правый край Н2</th>
     <th>Левый край Н1</th>
                  <th>Правый край Н1</th>
@@ -89,20 +113,44 @@
     </thead>
 
    <tr align="center"><td>Измеренное значение, мм</td>
-       <td>{{ list.d2.first_r_spring_H1 }}</td>
-       <td>{{ list.d2.first_r_spring_H2 }}</td>
-       <td>{{ list.d2.first_l_spring_H1 }}</td>
-       <td>{{ list.d2.first_l_spring_H2 }}</td>
-       <td>{{ list.d2.second_r_spring_H1 }}</td>
-       <td>{{ list.d2.second_r_spring_H2 }}</td>
-       <td>{{ list.d2.second_l_spring_H1 }}</td>
-       <td>{{ list.d2.second_l_spring_H2 }}</td>
+       <td {% if list.d2.first_r_spring_H1 < 68 %} style='background-color:#98FB98'
+               {% elif 67 < list.d2.first_r_spring_H1 < 69 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d2.first_r_spring_H1 }}</td>
+       <td {% if list.d2.first_r_spring_H2 < 68 %} style='background-color:#98FB98'
+               {% elif 67 < list.d2.first_r_spring_H2< 69 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d2.first_r_spring_H2 }}</td>
+       <td {% if list.d2.first_l_spring_H1 < 68 %} style='background-color:#98FB98'
+               {% elif 67 < list.d2.first_l_spring_H1< 69 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d2.first_l_spring_H1 }}</td>
+       <td {% if list.d2.first_l_spring_H2 < 68 %} style='background-color:#98FB98'
+               {% elif 67 < list.d2.first_l_spring_H2< 69 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d2.first_l_spring_H2 }}</td>
+       <td {% if list.d2.second_r_spring_H1 < 68 %} style='background-color:#98FB98'
+               {% elif 67 < list.d2.second_r_spring_H1< 69 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d2.second_r_spring_H1 }}</td>
+       <td {% if list.d2.second_r_spring_H2 < 68 %} style='background-color:#98FB98'
+               {% elif 67 < list.d2.second_r_spring_H2< 69 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d2.second_r_spring_H2 }}</td>
+       <td {% if list.d2.second_l_spring_H1 < 68 %} style='background-color:#98FB98'
+               {% elif 67 < list.d2.second_l_spring_H1< 69 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d2.second_l_spring_H1 }}</td>
+       <td {% if list.d2.second_l_spring_H2 < 68 %} style='background-color:#98FB98'
+               {% elif 67 < list.d2.second_l_spring_H2< 69 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d2.second_l_spring_H2 }}</td>
    </tr>
              <tr align="center"><td>Середина рессора</td>
-       <td colspan="2">{{ list.d2.first_r_spring_m }}</td>
-       <td colspan="2">{{ list.d2.first_l_spring_m }}</td>
-       <td colspan="2" >{{ list.d2.second_r_spring_m }}</td>
-       <td colspan="2">{{ list.d2.second_l_spring_m }}</td>
+       <td colspan="2" {% if list.d2.first_r_spring_m < 68 %} style='background-color:#98FB98'
+               {% elif 67 < list.d2.first_r_spring_m< 69 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d2.first_r_spring_m }}</td>
+       <td colspan="2" {% if list.d2.first_l_spring_m < 68 %} style='background-color:#98FB98'
+               {% elif 67 < list.d2.first_l_spring_m< 69 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d2.first_l_spring_m }}</td>
+       <td colspan="2" {% if list.d2.second_r_spring_m < 68 %} style='background-color:#98FB98'
+               {% elif 67 < list.d2.second_r_spring_m < 69 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d2.second_r_spring_m }}</td>
+       <td colspan="2" {% if list.d2.second_l_spring_m < 68 %} style='background-color:#98FB98'
+               {% elif 67 < list.d2.second_l_spring_m< 69 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#ffcccc'{% endif %} in>{{ list.d2.second_l_spring_m }}</td>
    </tr>
 
 
@@ -129,47 +177,73 @@
                {% else %} style='background-color:#FA8072'{% endif %} in align="center"><td>БИЛ-2</td>
        <td >{{ list.d6.bil2 }}</td>
    </tr>
-               <tr align="center"><td>БКР</td>
-       <td {% if list.d6.bkr =="Исправен" %} style='background-color:#98FB98'
-               {% else %} style='background-color:#FA8072'{% endif %} in>{{ list.d6.bkr }}</td>
+               <tr {% if list.d6.bkr =="Исправен" %} style='background-color:#98FB98'
+               {% else %} style='background-color:#FA8072'{% endif %} in align="center"><td>БКР</td>
+       <td >{{ list.d6.bkr }}</td>
    </tr>
-                <tr align="center"><td>ДУП</td>
-       <td {% if list.d6.dup == "Исправен" %} style='background-color:#98FB98'
-               {% else %} style='background-color:#FA8072'{% endif %} in>{{ list.d6.dup }}</td>
+                <tr {% if list.d6.dup =="Исправен" %} style='background-color:#98FB98'
+               {% else %} style='background-color:#FA8072'{% endif %} in align="center"><td>ДУП</td>
+       <td>{{ list.d6.dup }}</td>
    </tr>
 
   </table>
                         <h1>Дизель-генераторная установка:</h1>
            <table class="tabl" border="1" cellpadding="4" cellspacing="0">
+ <thead>
+   <tr align="center">
 
+    <th>Наработка от последнего ТО м.ч.</th>
+    <th>Тип смазки В картере</th>
+       <th>Количество смазки</th>
+   </tr>
+    </thead>
 
-     <tr><td>Наработка от последнего ТО м.ч.</td><td>{{ list.d3.time }}</td></tr>
-     <tr><td>Тип смазки В картере</td><td>{{ list.d3.type_oil }}</td></tr>
-        <tr><td>Количество смазки</td><td {% if list.d3.amount_oil ==32 %} style='background-color:#98FB98'
+     <tr><td {% if list.d3.time < 35 %} style='background-color:#98FB98'
+               {% elif 34 < list.d3.time< 36 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in>{{ list.d3.time }}</td>
+    <td  style='background-color:#98FB98'>{{ list.d3.type_oil }}</td>
+        <td {% if list.d3.amount_oil==32 %} style='background-color:#98FB98'
+               {% elif list.d3.amount_oil ==31 or list.d3.amount_oil ==33 %} style='background-color:#F0E68C'
                {% else %} style='background-color:#FA8072'{% endif %} in>{{ list.d3.amount_oil }}</td></tr>
 
 
   </table>
         <h1>Технические показатели дизельного двигателя:</h1>
      <table class="tabl">
-            <tr><td>Давление масла при холодном пуске:</td><td>{{ list.d3.pressure_oil }}</td></tr>
-            <tr><td>Натяжение ремней привода генератора прогиб:</td><td>{{ list.d3.tension }}</td></tr>
-            <tr><td>Зарядное напряжение генератора:</td><td>{{ list.d3.voltage }}</td></tr>
+            <tr {% if 4 < list.d3.pressure_oil < 7 %} style='background-color:#98FB98'
+               {% elif  4 == list.d3.pressure_oil or 7 == list.d3.pressure_oil %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Давление масла при холодном пуске:</td><td>{{ list.d3.pressure_oil }}</td></tr>
+            <tr {% if 7 < list.d3.tension < 11 %} style='background-color:#98FB98'
+               {% elif list.d3.tension==7 or list.d3.tension==11 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Натяжение ремней привода генератора прогиб:</td><td>{{ list.d3.tension }}</td></tr>
+            <tr {% if 12 < list.d3.voltage < 12.8 %} style='background-color:#98FB98'
+               {% elif list.d3.voltage==12 or list.d3.voltage==12.8 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Зарядное напряжение генератора:</td><td>{{ list.d3.voltage }}</td></tr>
          <tr><td>Оценка:</td><td>{{ list.d3.grade_dvs }}</td></tr>
         </table>
  <h1>Гидропередача:</h1>
        <table class="tabl">
-            <tr><td>Давление масла питательного насоса:</td><td>{{ list.d4.pressure_oil_p }}</td></tr>
-            <tr><td>На выходе из гидротрансформатораб:</td><td>{{ list.d4.pressure_oil_t }}</td></tr>
-            <tr><td>Давление в системе смазки:</td><td>{{ list.d4.pressure_oil_s }}</td></tr>
+            <tr {% if 1.20 < list.d4.pressure_oil_p < 1.25 %} style='background-color:#98FB98'
+               {% elif  1.20 == list.d4.pressure_oil_p or 1.25 == list.d4.pressure_oil_p %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Давление масла питательного насоса:</td><td>{{ list.d4.pressure_oil_p }}</td></tr>
+            <tr {% if 0.35 < list.d4.pressure_oil_t < 0.45 %} style='background-color:#98FB98'
+               {% elif  0.35 == list.d4.pressure_oil_t or 0.45 == list.d4.pressure_oil_t %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>На выходе из гидротрансформатораб:</td><td>{{ list.d4.pressure_oil_t }}</td></tr>
+            <tr {% if 0.08 < list.d4.pressure_oil_s < 0.12 %} style='background-color:#98FB98'
+               {% elif  0.08 == list.d4.pressure_oil_s or 0.12 == list.d4.pressure_oil_s %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Давление в системе смазки:</td><td>{{ list.d4.pressure_oil_s }}</td></tr>
          <tr><td>Оценка:</td><td>{{ list.d4.grade_transmission }}</td></tr>
         </table>
 
 <h1>Тормозное оборудование:</h1>
      <table class="tabl">
             <tr><td>Дата поверки предохранительного клапана:</td><td>{{ list.d7.data_check }}</td></tr>
-            <tr><td>Толщина тормозных колодок :</td><td>{{ list.d7.depth }}</td></tr>
-            <tr><td>Выход штока тормозного цилиндра:</td><td>{{ list.d7.rod }}</td></tr>
+            <tr {% if list.d7.depth==20 %} style='background-color:#98FB98'
+               {% elif list.d7.depth==19 or list.d7.depth==21 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Толщина тормозных колодок :</td><td>{{ list.d7.depth }}</td></tr>
+            <tr {% if 40 < list.d7.rod < 71 %} style='background-color:#98FB98'
+               {% elif 70 < list.d7.rod < 101 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Выход штока тормозного цилиндра:</td><td>{{ list.d7.rod }}</td></tr>
          <tr><td>Оценка:</td><td>{{ list.d7.grade_brake }}</td></tr>
         </table>
                   <h1>Приборы безопасности</h1>
@@ -180,54 +254,74 @@
      <th>Результат</th>
  </tr>
  </thead>
-               <tr {% if list.d5.compressor < 2.5 %} style='background-color:#ffcccc'
-               {% elif 2.8 < list.d5.compressor < 4.6 %} style='background-color:#F0E68C'
-               {% else %} style='background-color:#98FB98'{% endif %} in>
+               <tr {% if 7.2 < list.d5.compressor < 8.2 %} style='background-color:#98FB98'
+               {% elif list.d5.compressor==7.2 or list.d5.compressor==8.2 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in>
                     <td>Производительность компрессора </td>
                     <td>{{ list.d5.compressor }}</td>
                </tr>
-               <tr {% if list.d5.density_PM < 2.5 %} style='background-color:#ffcccc'
-               {% elif 2.8 < list.d5.density_PM < 4.6 %} style='background-color:#F0E68C'
-               {% else %} style='background-color:#98FB98'{% endif %} in>
+               <tr {% if  list.d5.density_PM < 0.5 %} style='background-color:#98FB98'
+               {% elif list.d5.density_PM==0.5 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in>
                     <td>Плотность ПМ</td>
                     <td>{{ list.d5.density_PM }}</td>
                </tr>
-               <tr {% if list.d5.density_TM < 2.5 %} style='background-color:#ffcccc'
-               {% elif 2.8 < list.d5.density_TM < 4.6 %} style='background-color:#F0E68C'
-               {% else %} style='background-color:#98FB98'{% endif %} in>
+               <tr {% if list.d5.density_TM < 0.5 %} style='background-color:#98FB98'
+               {% elif list.d5.density_TM==0.5 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in>
                     <td>Плотность ТМ  </td>
                     <td>{{ list.d5.density_TM }}</td>
                 </tr>
 
 
-               <tr><td>Плотность ТЦ  </td>
+               <tr {% if list.d5.density_TC < 0.3 %} style='background-color:#98FB98'
+               {% elif list.d5.density_TC==0.3 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Плотность ТЦ  </td>
        <td>{{ list.d5.density_TC }}</td>
    </tr>
-               <tr><td>Отпуск ТЦ  </td>
+               <tr {% if 13 < list.d5.time_TC %} style='background-color:#98FB98'
+               {% elif list.d5.time_TC == 13 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Отпуск ТЦ  </td>
        <td>{{ list.d5.time_TC }}</td>
    </tr>
-               <tr><td>Плотность УР  </td>
+               <tr {% if list.d5.density_UR < 0.2 %} style='background-color:#98FB98'
+               {% elif list.d5.density_UR==0.2 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Плотность УР  </td>
        <td>{{ list.d5.density_UR }}</td>
    </tr>
-               <tr><td>Время наполнения ТМ  </td>
+               <tr {% if  list.d5.time_TM < 4 %} style='background-color:#98FB98'
+               {% elif list.d5.time_TM==4 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Время наполнения ТМ  </td>
        <td>{{ list.d5.time_TM }}</td>
    </tr>
-               <tr><td>Время наполнения УР   </td>
+               <tr {% if 30 < list.d5.time_UP < 40 %} style='background-color:#98FB98'
+               {% elif list.d5.time_UP==30 or list.d5.time_UP==40 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Время наполнения УР   </td>
        <td>{{ list.d5.time_UP }}</td>
    </tr>
-               <tr><td>Регулировка редуктора  </td>
+               <tr {% if 5.0 < list.d5.reducer < 5.3 %} style='background-color:#98FB98'
+               {% elif list.d5.reducer==5.0 or list.d5.reducer==5.3 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Регулировка редуктора  </td>
        <td>{{ list.d5.reducer }}</td>
    </tr>
-               <tr><td>Темп служебной разрядки  </td>
+               <tr {% if list.d5.pace_1 < 5 %} style='background-color:#98FB98'
+               {% elif list.d5.pace_1==5 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Темп служебной разрядки  </td>
        <td>{{ list.d5.pace_1 }}</td>
    </tr>
-               <tr><td>Темп ликвидации сверх зарядки </td>
+               <tr {% if 80 < list.d5.pace_2 < 110 %} style='background-color:#98FB98'
+               {% elif list.d5.pace_2==110 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Темп ликвидации сверх зарядки </td>
        <td>{{ list.d5.pace_2 }}</td>
    </tr>
-               <tr><td>Темп экстренной разрядки  </td>
+               <tr {% if  list.d5.pace_3 < 3 %} style='background-color:#98FB98'
+               {% elif list.d5.pace_3==3 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Темп экстренной разрядки  </td>
        <td>{{ list.d5.pace_3 }}</td>
    </tr>
-               <tr><td>Срыв ЭПК </td>
+               <tr {% if  list.d5.EPK==7 %} style='background-color:#98FB98'
+               {% elif list.d5.EPK==7.1 or list.d5.EPK==6.9 %} style='background-color:#F0E68C'
+               {% else %} style='background-color:#FA8072'{% endif %} in><td>Срыв ЭПК </td>
        <td>{{ list.d5.EPK }}</td>
    </tr>
 
@@ -235,15 +329,6 @@
   </table>
 
         <a href="/home" class="btn btn-lg btn-outline-secondary">Назад</a>
-        <div class="form-group" id="process" style="display:none;">
-        <div class="progress">
-            <div class="progress-bar progress-bar-striped active bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100" style=""></div>
-        </div>
-        </div>
-        <br><br>
-         {% for cat, msg in get_flashed_messages(True) %}
-        <div class="flash {{cat}}">{{msg}}</div>
-        {%  endfor %}
 <script src="{{ url_for('static', filename='js/scripts1.js') }}"></script>
 </div>
 {% endblock %}

@@ -8,8 +8,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <div class="container mt-5">
 <h1>Путевая машина DUOMATIC 09-32 CSM</h1>
-    <p>Назначение: машина выправочно-подбивочно-рихтовочная</p>
-        <p>Способ выполнения работ: непрерывно-циклического действия</p>
+    <p class="lead">Назначение: машина выправочно-подбивочно-рихтовочная</p>
+        <p class="lead">Способ выполнения работ: непрерывно-циклического действия</p>
+
     {% if list|length > 0 %}
 <br>
     <p>
@@ -37,15 +38,13 @@
                    <tbody>
                     {% for m in list %}
                     <tr class="even" data-href="/machine/{{ m.id_machine }}">
-                    <th><input type="checkbox" name="check" id="{{m.id_machine}}" value="{{m.id_machine}}"></th>
+                    <td><input type="checkbox" name="check" id="{{m.id_machine}}" value="{{m.id_machine}}"></td>
                     <td>{{ m.id_number }}</td>
                     <td>{{ m.owner }}</td>
                         <td>{{ m.grade }}</td>
                         <td>{{ m.status }}</td>
 
                     <td></td>
-                    <th><a href="/machine/{{ m.id_machine }}" class="btn btn-sm btn-outline-secondary ">Детальнее</a></th>
-                    <th><a href="/posts/{{ m.id_machine }}/update" class="btn btn-sm btn-outline-secondary">Редактировать</a></th>
                     </tr>
 
                     {% endfor %}

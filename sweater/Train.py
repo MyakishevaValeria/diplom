@@ -3,7 +3,7 @@ from sweater.models import User, Machines, Maintenance, Transmission, Dvs, Wheel
 from sweater import app, db
 
 class Train(object):
-    id: int
+    id_m: int
     wheels: [int]
     springs: [int]
     dvs: [float]
@@ -18,9 +18,11 @@ class Train(object):
     status: str
     type: str
     date_maintenance: str
+    info: []
 
-    def __init__(self, id, wheels, springs, dvs, transmission, pneumatics, device, brake, type_oil, data_check, type, date_maintenance):
-        self.id = id
+    def __init__(self, id_m, info, wheels, springs, dvs, transmission, pneumatics, device, brake, type_oil, data_check, type, date_maintenance):
+        self.id_m = id_m
+        self.info = info
         self.wheels = wheels
         self.springs = springs
         self.dvs = dvs
@@ -39,23 +41,31 @@ class Train(object):
         self.maintenance.grade_springs(self.springs)
         self.maintenance.grade_dvs(self.dvs)
         self.maintenance.grade_transmissions(self.transmission)
-        self.maintenance.grade_pneumatics(self.pneumatics)
+        #self.maintenance.grade_pneumatics(self.pneumatics)
         self.maintenance.grade_device(self.device)
         self.maintenance.grade_brake(self.brake)
         # все методы тех обслуживания
         self.markM = self.maintenance.complete_grade()
         self.maintenance.safeMaintenance(self.wheels, self.springs, self.dvs, self.transmission,
-                                                     self.pneumatics, self.device, self.brake, self.type_oil,
-                                                     self.data_check, self.type, self.date_maintenance, id)
-        return self.markM
-
-    def change_statis(self, id_m):
+                                                     self.device, self.brake, self.type_oil,
+                                                     self.data_check, self.type, self.date_maintenance, self.id_m)
         self.status = self.maintenance.status()
-        return self.status
+        self.sql(self.info)
 
-    def repair(self):
-        self.repair = self.maintenance.repair
-        return self.repair
+    def change_statis(self):
+        self.status = self.maintenance.status()
+
+    #def repair(self):
+    #    self.repair = self.maintenance.repair
+    #    return self.repair
+
+    def sql(self, info: []):
+        info['grade'] = self.markM
+        info[8] = self.status
+        try:
+            db.session.commit()
+        except:
+            print("ошибка")
 
     @staticmethod
     def create_train(data: []):

@@ -26,7 +26,7 @@ class Machines(db.Model):
     grade = db.Column(db.Float)
     status = db.Column(db.String(10))
 
-    pr = db.relationship('Maintenance', backref='machines', uselist=False)
+    pr = db.relationship('Maintenance', cascade="all,delete", backref='machines', uselist=False)
 
     def __repr__(self):
         return f"<machines {self.id_machine}>"
@@ -41,13 +41,13 @@ class Maintenance(db.Model):
 
     id_machine = db.Column(db.Integer, db.ForeignKey('machines.id_machine'))
 
-    d2 = db.relationship('Springs', backref='maintenance', uselist=False)
-    d1 = db.relationship('Wheel', backref='maintenance', uselist=False)
-    d3 = db.relationship('Dvs', backref='maintenance', uselist=False)
-    d4 = db.relationship('Transmission', backref='maintenance', uselist=False)
-    d5 = db.relationship('Pneumatics', backref='maintenance', uselist=False)
-    d6 = db.relationship('Device', backref='maintenance', uselist=False)
-    d7 = db.relationship('Brakes', backref='maintenance', uselist=False)
+    d2 = db.relationship('Springs', cascade = "all,delete", backref='maintenance', uselist=False)
+    d1 = db.relationship('Wheel', cascade = "all,delete", backref='maintenance', uselist=False)
+    d3 = db.relationship('Dvs', cascade = "all,delete", backref='maintenance', uselist=False)
+    d4 = db.relationship('Transmission', cascade = "all,delete", backref='maintenance', uselist=False)
+    d5 = db.relationship('Pneumatics', cascade = "all,delete", backref='maintenance', uselist=False)
+    d6 = db.relationship('Device', cascade = "all,delete", backref='maintenance', uselist=False)
+    d7 = db.relationship('Brakes', cascade = "all,delete", backref='maintenance', uselist=False)
 
     def __repr__(self):
         return f"<maintenance {self.id_maintenance}>"

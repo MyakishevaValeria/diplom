@@ -8,7 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <div class="container mt-5">
 <h1>Данные о машине:</h1>
-    <div class="alert alert-info">
+    <div class="alert alert-dark">
         <p>Серийный номер: {{ list.id_number }}</p>
         <p>Дата изготовления: {{ list.date_manufacture }}</p>
         <p>Завод изготовления: {{ list.name_factory }}</p>
@@ -17,6 +17,7 @@
         <p>Дата ввода в эксплуатацию: {{ list.date_start }}</p>
         <p>Оценка: {{ list.grade }}</p>
         <p>Статус: {{ list.status }}</p>
+        <a href="/machine/{{ list.id_machine }}/update" class="btn btn-sm btn-outline-secondary">Редактировать</a>
     </div>
 </div>
 
@@ -32,7 +33,7 @@
 <canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" width="50" height="20" style="display: block; width: 200px; height: 100px;"></canvas>
 
     <div id="remove">
-       <form action="/remove" method="POST">
+       <form action="/remove-grade" method="POST">
            <input href="/modal" class="btn btn-danger my-2" type="submit" value="Удалить выбранные записи">
            <div class="table-responsive">
                <table class="table table-striped table-sm">
