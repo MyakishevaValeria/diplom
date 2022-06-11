@@ -63,19 +63,19 @@ def grade(id):
         transmission.append(request.form.get('pressure_oil_s', type=float))
 
         pneumatics = []
-        transmission.append(request.form.get('compressor', type=float))
-        transmission.append(request.form.get('density_PM', type=float))
-        transmission.append(request.form.get('density_TM', type=float))
-        transmission.append(request.form.get('density_TC', type=float))
-        transmission.append(request.form.get('time_TC', type=float))
-        transmission.append(request.form.get('density_UR', type=float))
-        transmission.append(request.form.get('time_TM', type=float))
-        transmission.append(request.form.get('time_UP', type=float))
-        transmission.append(request.form.get('reducer', type=float))
-        transmission.append(request.form.get('pace_1', type=float))
-        transmission.append(request.form.get('pace_2', type=float))
-        transmission.append(request.form.get('pace_3', type=float))
-        transmission.append(request.form.get('EPK', type=float))
+        pneumatics.append(request.form.get('compressor', type=float))
+        pneumatics.append(request.form.get('density_PM', type=float))
+        pneumatics.append(request.form.get('density_TM', type=float))
+        pneumatics.append(request.form.get('density_TC', type=float))
+        pneumatics.append(request.form.get('time_TC', type=float))
+        pneumatics.append(request.form.get('density_UR', type=float))
+        pneumatics.append(request.form.get('time_TM', type=float))
+        pneumatics.append(request.form.get('time_UP', type=float))
+        pneumatics.append(request.form.get('reducer', type=float))
+        pneumatics.append(request.form.get('pace_1', type=float))
+        pneumatics.append(request.form.get('pace_2', type=float))
+        pneumatics.append(request.form.get('pace_3', type=float))
+        pneumatics.append(request.form.get('EPK', type=float))
 
         device = []
         device.append(request.form['bel'])
@@ -91,13 +91,6 @@ def grade(id):
 
         train = Train(id, info, wheels, springs, dvs, transmission, pneumatics, device, brake, type_oil, data_check, type, date_maintenance)
         train.make_maintenance()
-        #Train.sql(info)
-        #info.grade = grade_TO
-        #info.status = train.change_statis(id)
-        #try:
-        #    db.session.commit()
-        #except:
-        #    print("ошибка")
     return render_template("grade.html", title="Провести оценку")
 
 
@@ -288,3 +281,7 @@ def excel():
     flash('Файл успешно скачен в раздел загрузки', category='success')
     return redirect('/home')
 
+
+@app.route("/modal")
+def modal():
+    return render_template('/modal.html')

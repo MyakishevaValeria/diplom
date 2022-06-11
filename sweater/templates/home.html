@@ -5,8 +5,10 @@
 {% endblock %}
 
 {% block body %}
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <div class="container mt-5">
+
 <h1>Путевая машина DUOMATIC 09-32 CSM</h1>
     <p class="lead">Назначение: машина выправочно-подбивочно-рихтовочная</p>
         <p class="lead">Способ выполнения работ: непрерывно-циклического действия</p>
@@ -20,10 +22,12 @@
         <div class="flash {{cat}}">{{msg}}</div>
         {%  endfor %}
     </p>
-
+<button type="button" class="btn btn-danger my-2" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+  Удвлить выбранные записи
+</button>
     <div id="remove">
        <form action="/remove" method="POST">
-           <input href="/modal" class="btn btn-danger my-2" type="submit" value="Удалить выбранные записи">
+
            <div class="table-responsive">
                <table class="table table-striped table-sm">
                    <thead>
@@ -60,7 +64,60 @@
         <p>Нет записей в БД</p>
     {% endif %}
 </div>
+<script scr="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<!-- Button trigger modal -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
+<!-- Modal -->
+
+<div class="modal fade" id="exampleModal1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Удаление</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       Вы уверены, что хотите удалить записи?
+      </div>
+      <div class="modal-footer">
+        <button type="button"  class="btn btn-lg btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+
+              <input href="/home" class="btn btn-danger my-2" type="submit" value="Удалить выбранные записи">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Get DOM Elements
+const modal = document.querySelector('#my-modal');
+const modalBtn = document.querySelector('#modal-btn');
+const closeBtn = document.querySelector('.close');
+
+// Events
+modalBtn.addEventListener('click', openModal);
+closeBtn.addEventListener('click', closeModal);
+window.addEventListener('click', outsideClick);
+
+// Open
+function openModal() {
+  modal.style.display = 'block';
+}
+
+// Close
+function closeModal() {
+  modal.style.display = 'none';
+}
+
+// Close If Outside Click
+function outsideClick(e) {
+  if (e.target == modal) {
+  modal.style.display = 'none';
+  }
+}
+</script>
  <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 
 {% endblock %}

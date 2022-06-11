@@ -35,24 +35,24 @@ div.selected {
 background: #F08080;
 }
 tbody tr:hover {
-    background: #C0C0C0; /* Цвет фона при наведении */
-    color: #fff; /* Цвет текста при наведении */
+    background: #d6d4d4; /* Цвет фона при наведении */
+    color: #000000; /* Цвет текста при наведении */
    }
 
 .tabl {
 	width: 100%;
 	margin-bottom: 20px;
-	border: 1px solid #dddddd;
+	border: 1px solid #616060;
 	border-collapse: collapse;
 }
 .tabl th {
 	font-weight: bold;
 	padding: 5px;
-	background: #efefef;
-	border: 1px solid #dddddd;
+	background:#d6d4d4;
+	border: 1px solid #616060;
 }
 .tabl td {
-	border: 1px solid #dddddd;
+	border: 1px solid #616060;
 	padding: 5px;
 }
 
@@ -68,3 +68,13 @@ table-layout: fixed; /* фиксированный алгоритм размещ
   border: 1px solid #FF4343;
   background: #FF9C9C;
 }
+
+
+
+.modal {
+    margin: 10px;
+    padding: 300px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+

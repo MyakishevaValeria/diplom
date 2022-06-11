@@ -4,7 +4,7 @@ $('tr').each(function(){
       $(this).parent('tr').addClass('empty');
       return false;
     }
-    if ($(this).html() == "не допущен") {
+    if ($(this).html() == "Не Допущен") {
       $(this).parent('tr').addClass('empty1');
       return false;
     }

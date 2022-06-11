@@ -38,6 +38,7 @@ class Maintenance(db.Model):
     date_maintenance = db.Column(db.String(50))
     grade_TO = db.Column(db.Float)
     repair = db.Column(db.Text)
+    status_TO = db.Column(db.Text)
 
     id_machine = db.Column(db.Integer, db.ForeignKey('machines.id_machine'))
 

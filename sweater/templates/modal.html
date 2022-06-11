@@ -15,40 +15,58 @@
      <img src="https://www.tadviser.ru/images/b/bb/%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B5_%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5_%D0%B4%D0%BE%D1%80%D0%BE%D0%B3%D0%B8.png" width="120" height="50" alt="Письма мастера дзен">
         <span class="fs-4">Российские железные дороги</span>
       </a>
-      <div class="text-end">
-         <a href="/home" class="w-100 btn btn-lg btn-outline-secondary"  aria-current="page">Главная страница</a>
-        <button type="button" class="w-100 btn btn-lg btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Выход
-</button>
-      </div>
-
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="/home" class="w-100 btn btn-lg btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" aria-current="page">Главная страница</a></li>
+        <li class="nav-item"><a href="/logout" class="w-100 btn btn-lg btn-outline-secondary ms-3">Выход</a></li>
+      </ul>
+    <button class="w-100 btn btn-lg btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">Главная страница</button>
     </header>
-
 <body>
 <script scr="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <!-- Button trigger modal -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
 <!-- Modal -->
 
 <div class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Выход</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-       Вы уверены, что хотите выйти?
+        ...
       </div>
       <div class="modal-footer">
-        <button type="button"  class="btn btn-lg btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
-          <a href="/logout">
-        <input type="button" class="w-100 btn btn-lg btn btn-danger" value="Выйти"></a>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
 </div>
+<button id="modal-btn" class="button">Открыть</button>
+
+  <div id="my-modal" class="modal">
+  <div class="modal-content">
+  <div class="modal-header">
+  <span class="close">×</span>
+  <h2>Название</h2>
+  </div>
+  <div class="modal-body">
+  <p>Заголовок</p>
+  <p>Здесь идет краткое описание.</p>
+  </div>
+  <div class="modal-footer">
+  <h3>Ниже можно написать</h3>
+  </div>
+  </div>
+  </div>
     {% block body %}{% endblock %}
 <script>
 // Get DOM Elements
