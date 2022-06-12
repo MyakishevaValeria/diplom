@@ -4,8 +4,8 @@ from sweater import app, db
 class Train_maintenance(object):
     repair: str
     status: str
-    wheels: int
-    springs: int
+    wheels: float
+    springs: float
     transmissions: float
     dvs: float
     pneumatics: float
@@ -18,116 +18,159 @@ class Train_maintenance(object):
         self.status = status
 
     def grade_wheels(self, wheels: [int]):
-        if all(item == 3 for item in wheels):
+        if all(item < 3 for item in wheels):
             self.wheels = 10
-        elif any(item == 4 for item in wheels) or any(item == 2 for item in wheels):
+        elif any(item == 3 for item in wheels) or any(item == 4 for item in wheels):
             self.wheels = 3
+            self.repair += "Проверить разбег колесных пар. "
         else:
             self.wheels = 0
+            self.repair += "Требуется ремонт колесных пар. "
+            self.status += "Не допущен"
 
     def grade_springs(self, springs: [int]):
-        if all(item == 68 for item in springs):
+        if all(item < 68 for item in springs):
             self.springs = 10
-        elif any(item == 69 for item in springs) or any(item == 67 for item in springs):
+        elif any(item == 68 for item in springs):
             self.springs = 3
+            self.repair += "Проверить рессорное подвешивание. "
         else:
             self.springs = 0
+            self.repair += "Требуется ремонт рессорного подвешивания. "
+            self.status += "Не допущен"
 
     def grade_transmissions(self, oils: [float]):
         if 1.20 < oils[0] < 1.25:
             result_a = 10
-        elif 1.15 < oils[0] < 1.20 or 1.25 < oils[0] < 1.30:
+        elif oils[0] == 1.20 or oils[0] == 1.25:
             result_a = 3
+            self.repair += "Проверить давление масла питательного насоса. "
+            self.status += "Допущен с ограничениями"
         else:
             result_a = 0
-            self.repair += "Замените масло в двигателе"
-        if 0.35 < oils[1] < 0.4:
+            self.repair += "Замените масло питательного насоса в гидропередаче. "
+            self.status += "Не допущен"
+        if 0.35 < oils[1] < 0.45:
             result_b = 10
-        elif 0.3 < oils[1] < 0.35 or 0.4 < oils[1] < 0.45:
+        elif oils[1] == 0.35 or oils[1] == 0.45:
             result_b = 3
+            self.repair += "Проверить давление масла на выходе из гидротрансформатора. "
+            self.status += "Допущен с ограничениями"
         else:
             result_b = 0
-            self.repair += "Замените охлаждающую жидкость"
+            self.repair += "Замените масло в гидротрансформаторе. "
+            self.status += "Не допущен"
         if 0.08 < oils[2] < 0.12:
             result_c = 10
-        elif 0.05 < oils[2] < 0.08 or 0.12 < oils[2] < 0.15:
+        elif oils[2] == 0.08 or oils[2] < 0.12:
             result_c = 3
+            self.repair += "Проверить давление в системе смазки. "
+            self.status += "Допущен с ограничениями"
         else:
             result_c = 0
-            self.repair += "Проверить давление"
+            self.repair += "Заменить смазку в гидропередаче. "
+            self.status += "Не допущен"
         self.transmissions = (result_a + result_b + result_c) / 3
+        print(self.status)
 
     def grade_dvs(self, dvs: [float]):
-        if 1.20 < dvs[0] < 1.25:
+        if dvs[0] < 35:
             result_a = 10
-        elif 1.15 < dvs[0] < 1.20 or 1.25 < dvs[0] < 1.30:
+        elif dvs[0] == 35:
             result_a = 3
+            self.status += "Допущен с ограничениями"
         else:
             result_a = 0
-            self.repair += "Замените масло в двигателе"
-        if 0.35 < dvs[1] < 0.4:
+            self.repair += "Замените масло в двигателе, наработка свыше 35 м.ч. "
+            self.status += "Не допущен"
+        if dvs[1] == 32:
             result_b = 10
-        elif 0.3 < dvs[1] < 0.35 or 0.4 < dvs[1] < 0.45:
+        elif dvs[1] == 31 or dvs[1] == 33:
             result_b = 3
+            self.repair += "Проверить количество смазки в двигателе. "
+            self.status += "Допущен с ограничениями"
         else:
             result_b = 0
-            self.repair += "Замените охлаждающую жидкость"
-        if 0.08 < dvs[2] < 0.12:
+            self.repair += "Добавить смазку в двигатель. "
+            self.status += "Не допущен"
+        if 4 < dvs[2] < 7:
             result_c = 10
-        elif 0.05 < dvs[2] < 0.08 or 0.12 < dvs[2] < 0.15:
+        elif dvs[2] == 4 or dvs[2] == 7:
             result_c = 3
+            self.repair += "Проверить давление масла при холостом пуске. "
+            self.status += "Допущен с ограничениями"
         else:
             result_c = 0
-            self.repair += "Проверить давление"
-        if 0.35 < dvs[3] < 0.4:
+            self.repair += "Заменить масло в двигателе. "
+            self.status += "Не допущен"
+        if 7 < dvs[3] < 11:
             result_d = 10
-        elif 0.3 < dvs[3] < 0.35 or 0.4 < dvs[3] < 0.45:
+        elif dvs[3] == 7 or dvs[3] == 11:
             result_d = 3
+            self.repair += "Проверить натяжение ремней привода генератора. "
+            self.status += "Допущен с ограничениями"
         else:
             result_d = 0
-            self.repair += "Замените охлаждающую жидкость"
-        if 0.08 < dvs[4] < 0.12:
+            self.repair += "Заменить ремни привода генератора. "
+            self.status += "Не допущен"
+        if 12 < dvs[4] < 12.8:
             result_e = 10
-        elif 0.05 < dvs[4] < 0.08 or 0.12 < dvs[4] < 0.15:
+        elif dvs[4] == 12 or dvs[4] == 12.8:
             result_e = 3
+            self.repair += "Проверить напряжение генератора. "
+            self.status += "Допущен с ограничениями"
         else:
             result_e = 0
-            self.repair += "Проверить давление"
+            self.repair += "Заменить генератор. "
+            self.status += "Не допущен"
         self.dvs = (result_a + result_b + result_c + result_d + result_e) / 5
+        print(self.status)
 
     def grade_device(self, device: [str]):
         if all(item == 'Исправен' for item in device):
             self.device = 10
         else:
             self.device = 0
+            self.repair += "Заменить приборы безопасности. "
+            self.status += "Не допущен"
+        print(self.status)
 
     def grade_brake(self, brake: [float]):
-        if 1.20 < brake[0] < 1.25:
+        if brake[0] == 20:
             result_a = 10
-        elif 1.15 < brake[0] < 1.20 or 1.25 < brake[0] < 1.30:
+        elif brake[0] == 19 or brake[0] == 21:
             result_a = 3
+            self.repair += "Проверить толщину тормозных колодок. "
         else:
             result_a = 0
-            self.repair += "Замените масло в двигателе"
-        if 0.35 < brake[1] < 0.4:
+            self.repair += "Заменить тормозные колодки. "
+            self.status += "Не допущен"
+        if 40 < brake[1] < 71:
             result_b = 10
-        elif 0.3 < brake[1] < 0.35 or 0.4 < brake[1] < 0.45:
+        elif 70 < brake[1] < 101:
             result_b = 3
+            self.repair += "Проверить выход штока тормозного цилиндра. "
         else:
             result_b = 0
-            self.repair += "Замените охлаждающую жидкость"
+            self.repair += "Заменить шток тормозного цилиндра. "
+            self.status += "Не допущен"
         self.brake = (result_a + result_b) / 2
+        print(self.status)
 
     def complete_grade(self):
         self.markM = (self.wheels + self.springs + self.transmissions +
-                      self.brake + self.device + self.dvs )/7
+                      self.brake + self.device + self.dvs +self.pneumatics )/7
 
     def statusM(self):
         if (self.wheels == self.springs == self.dvs == self.transmissions ==
                  self.device == self.brake == 10.0):
             self.status = "Допущен"
+        elif self.status.count("Не допущен") != 0:
+            self.status = "Не допущен"
+            print('Входит')
         else:
-            self.status = "Не Допущен"
+            self.status = "Допущен c ограничениями"
+        print(self.status.find("Не допущен"))
         #elif self.repair != "":
          #   self.status = "Недопущен"
 

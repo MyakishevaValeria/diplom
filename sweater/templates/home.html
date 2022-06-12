@@ -42,7 +42,7 @@
                    <tbody>
                     {% for m in list %}
                     <tr class="even" data-href="/machine/{{ m.id_machine }}">
-                    <td><input type="checkbox" name="check" id="{{m.id_machine}}" value="{{m.id_machine}}"></td>
+                    <th><input type="checkbox" name="check" id="{{m.id_machine}}" value="{{m.id_machine}}"></th>
                     <td>{{ m.id_number }}</td>
                     <td>{{ m.owner }}</td>
                         <td>{{ m.grade }}</td>

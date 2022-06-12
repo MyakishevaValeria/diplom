@@ -25,15 +25,16 @@
 <h1>Технические обслуживания</h1>
     <p>
         <a class="btn btn-danger" href="/grade/{{ list.id_machine }}">Провести оценку</a>
+        <button type="button" class="btn btn-danger my-2" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+  Удвлить выбранные записи
+</button>
         <a class="btn btn-danger" href="/excel">Скачать Execl-файл</a>
         {% for cat, msg in get_flashed_messages(True) %}
         <div class="flash {{cat}}">{{msg}}</div>
         {%  endfor %}
     </p>
 <canvas id="myChart"  width="100" height="30"></canvas>
-<button type="button" class="btn btn-danger my-2" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-  Удвлить выбранные записи
-</button>
+
     <div id="remove">
        <form action="/remove-grade" method="POST">
            <div class="table-responsive">
@@ -54,9 +55,9 @@
                    </thead>
                    <tbody>
                     {% for m in list1 %}
-                    <tr {% if m.grade_TO == 4.6 %} style='background-color:#F0E68C'
-                        {% elif m.grade_TO == 4.3 %} style='background-color:#FA8072'
-                   {% else %} style='background-color:#98FB98'{% endif %} in>
+                    <tr {% if m.status_TO =="Допущен" %} style='background-color:#98FB98 '
+                        {% elif m.status_TO == "Не допущен" %} style='background-color:#FA8072'
+                   {% else %} style='background-color:#F0E68C'{% endif %} in>
                     <th><input type="checkbox" name="check" id="{{m.id_maintenance}}" value="{{m.id_maintenance}}"></th>
                     <td>{{ m.id_maintenance }}</td>
                     <td>{{ m.type }}</td>
