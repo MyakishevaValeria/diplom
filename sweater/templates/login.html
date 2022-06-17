@@ -17,20 +17,24 @@
     <form method="POST">
         <img class="mb-4" src="https://www.tadviser.ru/images/b/bb/%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B5_%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5_%D0%B4%D0%BE%D1%80%D0%BE%D0%B3%D0%B8.png" alt="" width="150" height="65">
         <h1 class="h3 mb-3 fw-normal">Войти в систему</h1>
+        <center>
         {% for cat, msg in get_flashed_messages(True) %}
         <div class="flash {{cat}}">{{msg}}</div>
+            <h1></h1>
         {%  endfor %}
+
         <div class="form-group input-group-lg">
        <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                    <input name="login" type="text" class="form-control" placeholder="Логин">
+                    <input name="login" type="text"required  class="form-control" placeholder="Логин">
         </div>
-
+  <h1></h1>
       <div class="form-group input-group-lg">
+
        <span class="input-group-addon"><span class="glyphicon glyphicon-eye-close"></span></span>
-                    <input name="password" type="password" class="form-control" placeholder="Пароль">
+                    <input name="password" type="password" required class="form-control" placeholder="Пароль">
       </div>
         <p></p>
-        <a class="btn btn-secondary my-2" href="{{ url_for('register') }}">Регистрация</a>
+</center>
             <input class="btn btn-secondary my-2" type="submit" value="Войти">
     </form>
 </main>

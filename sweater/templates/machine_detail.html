@@ -9,7 +9,7 @@
 <div class="container mt-5">
 <h1>Данные о машине:</h1>
     <div class="alert alert-dark">
-        <p>Серийный номер: {{ list.id_number }}</p>
+        <p>Идентификационный номер: {{ list.id_number }}</p>
         <p>Дата изготовления: {{ list.date_manufacture }}</p>
         <p>Завод изготовления: {{ list.name_factory }}</p>
         <p>Срок эксплуатации: {{ list.lifetime }}</p>
@@ -18,13 +18,15 @@
         <p>Оценка: {{ list.grade }}</p>
         <p>Статус: {{ list.status }}</p>
         <a href="/machine/{{ list.id_machine }}/update" class="btn btn-sm btn-outline-secondary">Редактировать</a>
+<br>
     </div>
+    <br>
 </div>
 
 <div class="container mt-5">
 <h1>Технические обслуживания</h1>
     <p>
-        <a class="btn btn-danger" href="/grade/{{ list.id_machine }}">Провести оценку</a>
+        <a class="btn btn-danger" href="/grade/{{ list.id_machine }}">Провести оценку технического состояния</a>
         <button type="button" class="btn btn-danger my-2" data-bs-toggle="modal" data-bs-target="#exampleModal2">
   Удвлить выбранные записи
 </button>
@@ -46,8 +48,8 @@
 
                        <th>Номер ТО</th>
                        <th>Вид ТО</th>
-                       <th>Оценка</th>
                        <th>Дата диагностики</th>
+                       <th>Оценка</th>
                        <th>Результат</th>
                        <th></th>
 
@@ -61,8 +63,8 @@
                     <th><input type="checkbox" name="check" id="{{m.id_maintenance}}" value="{{m.id_maintenance}}"></th>
                     <td>{{ m.id_maintenance }}</td>
                     <td>{{ m.type }}</td>
+                    <td>{{ m.date_maintenance }}</td>
                     <td>{{ m.grade_TO }}</td>
-                        <td>{{ m.date_maintenance }}</td>
                         <td>{{ m.status_TO }}</td>
                      <td></td>
                     <th><a href="/grade_detail/{{ m.id_maintenance }}" class="btn btn-sm btn-outline-secondary ">Детальнее</a></th>

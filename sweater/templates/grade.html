@@ -9,9 +9,11 @@
     <form method="post">
 
         <h1>Техническое обслуживание:</h1>
+         <b>Вид технического обслуживания:</b><br>
         <input type="text" name="type" id="type" class="form-control" placeholder="Введите вид ТО"><br>
+        <b>Дата проведения технического обслуживания:</b><br>
         <input type="date" name="date_maintenance" id="date_maintenance" class="form-control" placeholder="Введите дату проведения ТО"><br>
-           <h1>Замер разбега колёсных пар в буксовых направляющих</h1>
+           <h2>Замер разбега колёсных пар в буксовых направляющих</h2>
            <table class="tabl" border="1" cellpadding="4" cellspacing="0">
  <thead>
    <tr align="center">
@@ -52,7 +54,7 @@
        <td><input type="number" step="any" name="second_lateral_l" id="second_lateral_l" class="form-control"></td>
    </tr>
   </table>
-                 <h1>Замер рессорного подвешивания</h1>
+                 <h2>Замер рессорного подвешивания</h2>
            <table class="tabl" border="1" cellpadding="4" cellspacing="0">
  <thead>
    <tr align="center">
@@ -81,14 +83,14 @@
     </thead>
 
    <tr><td>Измеренное значение, мм</td>
-       <td><input type="number" step="any" name="first_r_spring_H1" id="first_r_spring_H1" class="form-control"></td>
-       <td><input type="number" step="any" name="first_r_spring_H2" id="first_r_spring_H2" class="form-control"></td>
-       <td><input type="number" step="any" name="first_l_spring_H1" id="first_l_spring_H1" class="form-control"></td>
-       <td><input type="number" step="any" name="first_l_spring_H2" id="first_l_spring_H2" class="form-control"></td>
-       <td><input type="number" step="any" name="second_r_spring_H1" id="second_r_spring_H1" class="form-control"></td>
-       <td><input type="number" step="any" name="second_r_spring_H2" id="second_r_spring_H2" class="form-control"></td>
-   <td><input type="number" step="any" name="second_l_spring_H1" id="second_l_spring_H1" class="form-control"></td>
-       <td><input type="number" step="any" name="second_l_spring_H2" id="second_l_spring_H2" class="form-control"></td>
+       <td><input type="number" required step="any" name="first_r_spring_H1" id="first_r_spring_H1" class="form-control"></td>
+       <td><input type="number" required step="any" name="first_r_spring_H2" id="first_r_spring_H2" class="form-control"></td>
+       <td><input type="number"required  step="any" name="first_l_spring_H1" id="first_l_spring_H1" class="form-control"></td>
+       <td><input type="number" required step="any" name="first_l_spring_H2" id="first_l_spring_H2" class="form-control"></td>
+       <td><input type="number"required  step="any" name="second_r_spring_H1" id="second_r_spring_H1" class="form-control"></td>
+       <td><input type="number"required  step="any" name="second_r_spring_H2" id="second_r_spring_H2" class="form-control"></td>
+   <td><input type="number" required step="any" name="second_l_spring_H1" id="second_l_spring_H1" class="form-control"></td>
+       <td><input type="number" required step="any" name="second_l_spring_H2" id="second_l_spring_H2" class="form-control"></td>
    </tr>
              <tr><td>Середина рессора</td>
        <td colspan="2"><input type="number" step="any" name="first_r_spring_m" id="first_r_spring_m" class="form-control"></td>
@@ -99,7 +101,7 @@
 
 
 </table>
-                   <h1>Приборы безопасности</h1>
+                   <h2>Приборы безопасности состояние пломбировки:</h2>
            <table class="tabl" border="1" cellpadding="4" cellspacing="0">
  <thead>
    <tr align="center">
@@ -109,31 +111,31 @@
    </tr>
     </thead>
 
-   <tr><td>БЭЛ</td>
+   <tr align="center"><td>БЭЛ</td>
        <td><select name="bel" id="bel">
   <option value="Исправен">Исправен</option>
   <option value="Неисправен">Неисправен</option>
 </select></td>
    </tr>
-               <tr><td>БИЛ-1</td>
+               <tr align="center"><td>БИЛ-1</td>
        <td><select name="bil1" id="bil1">
   <option value="Исправен">Исправен</option>
   <option value="Неисправен">Неисправен</option>
 </select></td>
    </tr>
-               <tr><td>БИЛ-2</td>
+               <tr align="center"><td>БИЛ-2</td>
        <td><select name="bil2" id="bil2">
   <option value="Исправен">Исправен</option>
   <option value="Неисправен">Неисправен</option>
 </select></td>
    </tr>
-               <tr><td>БКР</td>
+               <tr align="center"><td>БКР</td>
        <td><select name="bkr" id="bkr">
   <option value="Исправен">Исправен</option>
   <option value="Неисправен">Неисправен</option>
 </select></td>
    </tr>
-                <tr><td>ДУП</td>
+                <tr align="center"><td>ДУП</td>
        <td><select name="dup" id="dup">
   <option value="Исправен">Исправен</option>
   <option value="Неисправен">Неисправен</option>
@@ -141,13 +143,13 @@
    </tr>
 
   </table>
-                        <h1>Дизель-генераторная установка:</h1>
+                        <h2>Дизель-генераторная установка:</h2>
            <table class="tabl" border="1" cellpadding="4" cellspacing="0">
  <thead>
    <tr align="center">
 
     <th>Наработка от последнего ТО м.ч.</th>
-    <th>Тип смазки В картере</th>
+    <th>Тип смазки в картере</th>
        <th>Количество смазки</th>
    </tr>
     </thead>
@@ -158,19 +160,28 @@
    </tr>
 
   </table>
-        <h1>Технические показатели дизельного двигателя:</h1>
+        <h2>Технические показатели дизельного двигателя:</h2>
+        <b>Давление масла при холодном пуске:</b><br>
         <input type="number" step="any" name="pressure_oil" id="pressure_oil" class="form-control" placeholder="Давление масла при холодном пуске"><br>
+        <b>Натяжение ремней привода генератора прогиб:</b><br>
         <input type="number" step="any" name="tension" id="tension" class="form-control" placeholder="Натяжение ремней привода генератора прогиб"><br>
+        <b>Зарядное напряжение генератора:</b><br>
         <input type="number" step="any" name="voltage" id="voltage" class="form-control" placeholder="Зарядное напряжение генератора"><br>
- <h1>Гидропередача:</h1>
-        <input type="number" step="any" name="pressure_oil_p" id="pressure_oil_p" class="form-control" placeholder="Давление масла питательного насоса "><br>
-        <input type="number" step="any" name="pressure_oil_t" id="pressure_oil_t" class="form-control" placeholder="На выходе из гидротрансформатора"><br>
-        <input type="number" step="any" name="pressure_oil_s" id="pressure_oil_s" class="form-control" placeholder="Давление в системе смазки"><br>
-<h1>Тормозное оборудование:</h1>
-        <input type="date" name="data_check" id="data_check" class="form-control" placeholder="Давление масла питательного насоса "><br>
-        <input type="number" step="any" name="depth" id="depth" class="form-control" placeholder="На выходе из гидротрансформатора"><br>
-        <input type="number" step="any" name="rod" id="rod" class="form-control" placeholder="Давление в системе смазки"><br>
-                  <h1>Приборы безопасности</h1>
+ <h2>Гидропередача:</h2>
+         <b>Давление масла питательного насоса:</b><br>
+        <input type="number" required step="any" name="pressure_oil_p" id="pressure_oil_p" class="form-control" placeholder="Давление масла питательного насоса "><br>
+         <b>На выходе из гидротрансформатора:</b><br>
+        <input type="number" required step="any" name="pressure_oil_t" id="pressure_oil_t" class="form-control" placeholder="На выходе из гидротрансформатора"><br>
+         <b>Давление в системе смазки:</b><br>
+        <input type="number" required step="any" name="pressure_oil_s" id="pressure_oil_s" class="form-control" placeholder="Давление в системе смазки"><br>
+<h2>Тормозное оборудование:</h2>
+        <b>Дата проверки предохранительного клапана:</b><br>
+        <input type="date" name="data_check" id="data_check" class="form-control" placeholder="Дата проверки предохранительного клапана "><br>
+        <b>Толщина тормозных колодок:</b><br>
+        <input type="number"required  step="any" name="depth" id="depth" class="form-control" placeholder="Толщина тормозных колодок"><br>
+        <b>Выход штока тормозного цилиндра, мм:</b><br>
+        <input type="number" required step="any" name="rod" id="rod" class="form-control" placeholder="Выход штока тормозного цилиндра"><br>
+                  <h2>Пневматическая система:</h2>
            <table class="tabl" border="1" cellpadding="4" cellspacing="0">
  <thead>
    <tr align="center">
@@ -183,49 +194,52 @@
    <tr><td>Производительность компрессора </td>
 
 
-       <td><input type="number" step="any" name="compressor" id="compressor" class="form-control"></td>
+       <td><input type="number" step="any"required  name="compressor" id="compressor" class="form-control"></td>
    </tr>
-               <tr><td>Плотность ПМ  </td>
-       <td><input type="number" step="any" name="density_PM" id="density_PM" class="form-control"></td>
+               <tr><td>Плотность ПМ (8.0 до 7.5 ат. V=1000л в течении 6,5 мин)  </td>
+       <td><input type="number" step="any" required name="density_PM" id="density_PM" class="form-control"></td>
    </tr>
-               <tr><td>Плотность ТМ  </td>
-       <td><input type="number" step="any" name="density_TM" id="density_TM" class="form-control"></td>
+               <tr><td>Плотность ТМ (за 2,5 мин) </td>
+       <td><input type="number" step="any" required name="density_TM" id="density_TM" class="form-control"></td>
    </tr>
-               <tr><td>Плотность ТЦ  </td>
-       <td><input type="number" step="any" name="density_TC" id="density_TC" class="form-control"></td>
+               <tr><td>Плотность ТЦ (в течении 1 мин) </td>
+       <td><input type="number" step="any" required name="density_TC" id="density_TC" class="form-control"></td>
    </tr>
-               <tr><td>Отпуск ТЦ  </td>
-       <td><input type="number" step="any" name="time_TC" id="time_TC" class="form-control"></td>
+                <tr><td>Наполнение ТЦ (до 0,35 МПа) </td>
+       <td><input type="number" step="any" required name="density_TC" id="filling_TC" class="form-control"></td>
    </tr>
-               <tr><td>Плотность УР  </td>
-       <td><input type="number" step="any" name="density_UR" id="density_UR" class="form-control"></td>
+               <tr><td>Отпуск ТЦ (с 0,35 до 0,05 МПа) </td>
+       <td><input type="number" step="any" required name="time_TC" id="time_TC" class="form-control"></td>
    </tr>
-               <tr><td>Время наполнения ТМ  </td>
-       <td><input type="number" step="any" name="time_TM" id="time_TM" class="form-control"></td>
+               <tr><td>Плотность УР (за 3 мин) </td>
+       <td><input type="number" step="any" required name="density_UR" id="density_UR" class="form-control"></td>
    </tr>
-               <tr><td>Время наполнения УР   </td>
-       <td><input type="number" step="any" name="time_UP" id="time_UP" class="form-control"></td>
+               <tr><td>Время наполнения ТМ (из VI -> II с 0 до 5 кгс/см2) </td>
+       <td><input type="number" step="any" required name="time_TM" id="time_TM" class="form-control"></td>
    </tr>
-               <tr><td>Регулировка редуктора  </td>
-       <td><input type="number" step="any" name="reducer" id="reducer" class="form-control"></td>
+               <tr><td>Время наполнения УР (из VI -> II с 0 до 5 кгс/см2) </td>
+       <td><input type="number" step="any" required name="time_UP" id="time_UP" class="form-control"></td>
    </tr>
-               <tr><td>Темп служебной разрядки  </td>
-       <td><input type="number" step="any" name="pace_1" id="pace_1" class="form-control"></td>
+               <tr><td>Регулировка редуктора 348 </td>
+       <td><input type="number" step="any" required name="reducer" id="reducer" class="form-control"></td>
    </tr>
-               <tr><td>Темп ликвидации сверх зарядки </td>
-       <td><input type="number" step="any" name="pace_2" id="pace_2" class="form-control"></td>
+               <tr><td>Темп служебной разрядки (с 5,0 до 4,0 кгс/см2) </td>
+       <td><input type="number" step="any" required name="pace_1" id="pace_1" class="form-control"></td>
    </tr>
-               <tr><td>Темп экстренной разрядки  </td>
-       <td><input type="number" step="any" name="pace_3" id="pace_3" class="form-control"></td>
+               <tr><td>Темп ликвидации сверх зарядки (с 6,0 до 5,8)</td>
+       <td><input type="number" step="any" required name="pace_2" id="pace_2" class="form-control"></td>
+   </tr>
+               <tr><td>Темп экстренной разрядки (с 5,0 до 1,0) </td>
+       <td><input type="number" step="any" required name="pace_3" id="pace_3" class="form-control"></td>
    </tr>
                <tr><td>Срыв ЭПК </td>
-       <td><input type="number" step="any" name="EPK" id="EPK" class="form-control"></td>
+       <td><input type="number" step="any" required name="EPK" id="EPK" class="form-control"></td>
    </tr>
 
 
   </table>
-        <input type="submit" class="btn btn-danger" value="Отправить">
-        <a href="/home" class="btn btn-lg btn-outline-secondary">Назад</a>
+        <input type="submit" class="btn btn-danger" value="Рассчитать оценку">
+        <a href="/machine/{{ list.id_machine }}" class="btn btn-lg btn-outline-secondary">Назад</a>
         <div class="form-group" id="process" style="display:none;">
         <div class="progress">
             <div class="progress-bar progress-bar-striped active bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100" style=""></div>

@@ -133,6 +133,7 @@ class Pneumatics(db.Model):
     density_PM = db.Column(db.Float)
     density_TM = db.Column(db.Float)
     density_TC = db.Column(db.Float)
+    filling_TC = db.Column(db.Float)
     time_TC = db.Column(db.Float)
     density_UR = db.Column(db.Float)
     time_TM = db.Column(db.Float)
@@ -168,8 +169,8 @@ class Device(db.Model):
 class Brakes(db.Model):
     id_brakes = db.Column(db.Integer, primary_key=True)
     data_check = db.Column(db.String(50))
-    depth = db.Column(db.Float)
-    rod = db.Column(db.Float)
+    depth = db.Column(db.Integer)
+    rod = db.Column(db.Integer)
     grade_brake = db.Column(db.Float)
 
     maintenance_id = db.Column(db.Integer, db.ForeignKey('maintenance.id_maintenance'))

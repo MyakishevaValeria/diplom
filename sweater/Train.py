@@ -6,7 +6,7 @@ class Train(object):
     id_m: int
     wheels: [int]
     springs: [int]
-    dvs: [float]
+    dvs: []
     transmission: [float]
     pneumatics: [float]
     device: [str]
@@ -36,6 +36,7 @@ class Train(object):
         self.maintenance = compare.Train_maintenance()
 
     def make_maintenance(self):
+        # все методы тех обслуживания
         self.maintenance.grade_wheels(self.wheels)
         self.maintenance.grade_springs(self.springs)
         self.maintenance.grade_dvs(self.dvs)
@@ -43,7 +44,6 @@ class Train(object):
         self.maintenance.grade_pneumatics(self.pneumatics)
         self.maintenance.grade_device(self.device)
         self.maintenance.grade_brake(self.brake)
-        # все методы тех обслуживания
         self.markM = self.maintenance.complete_grade()
         self.maintenance.statusM()
         self.maintenance.safeMaintenance(self.wheels, self.springs, self.dvs, self.transmission,self.pneumatics,

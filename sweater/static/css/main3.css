@@ -4,7 +4,7 @@ body {
 }
 form{
             width:500px; /* ширина блока */
-            height: 355px; /* высота блока */
+            height: 380px; /* высота блока */
             background: #fff; /* фон блока */
             border-radius: 10px; /* закругленные углы блока */
             margin: 10% auto; /* отступ сверху и выравнивание по середине */
@@ -19,5 +19,14 @@ form{
 .flash.error {
   border: 1px solid #FF4343;
   background: #FF9C9C;
+  width:400px;
+}
+
+
+input[type=text]{
+   width:300px;
+}
+input[type=password]{
+   width:300px;
 }
 

@@ -8,13 +8,19 @@
 <div class="container mt-5">
     <form method="post">
         <h1>Данные о машине:</h1>
+        <b>Идентификационный номер:</b><br>
         <input type="number" step="any" name="id_number" id="id_number" class="form-control" placeholder="Введите серийный номер"><br>
+        <b>Дата изготовления:</b><br>
         <input type="date" name="date_manufacture" id="date_manufacture" class="form-control" placeholder="Введите дату иизготовления"><br>
+        <b>Завод изготовитель:</b><br>
         <input type="text" name="name_factory" id="name_factory" class="form-control" placeholder="Введите завод изготовителя"><br>
+        <b>Срок эксплуатации:</b><br>
         <input type="number" step="any" name="lifetime" id="lifetime" class="form-control" placeholder="Введите срок эксплуатации"><br>
+        <b>Собственник:</b><br>
         <input type="text" step="any" name="owner" id="owner" class="form-control" placeholder="Введите собственника"><br>
+        <b>Дата ввода в эксплуатацию:</b><br>
         <input type="date" step="any" name="date_start" id="date_start" class="form-control" placeholder="Дата ввода в эксплуатацию"><br>
-        <input type="submit" class="btn btn-danger" value="Отправить">
+        <input type="submit" class="btn btn-danger" value="Создать">
         <a href="/home" class="btn btn-lg btn-outline-secondary">Назад</a>
         <div class="form-group" id="process" style="display:none;">
         <div class="progress">

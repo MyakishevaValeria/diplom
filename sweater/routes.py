@@ -3,7 +3,10 @@ from flask_login import login_user, login_required, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 import pandas as pd  # pip install pandas
 import sqlite3
+from styleframe import StyleFrame
+
 import xlsxwriter
+from datetime import datetime, timedelta
 
 import compare
 
@@ -50,9 +53,9 @@ def grade(id):
                 springs.append(int(value))
 
         dvs = []
-        dvs.append(request.form.get('time', type=float))
+        dvs.append(request.form.get('time', type=int))
         type_oil = request.form['type_oil']
-        dvs.append(request.form.get('amount_oil', type=float))
+        dvs.append(request.form.get('amount_oil', type=int))
         dvs.append(request.form.get('pressure_oil', type=float))
         dvs.append(request.form.get('tension', type=float))
         dvs.append(request.form.get('voltage', type=float))
@@ -86,12 +89,12 @@ def grade(id):
 
         brake = []
         data_check = request.form['data_check']
-        brake.append(request.form.get('depth', type=float))
-        brake.append(request.form.get('rod', type=float))
+        brake.append(request.form.get('depth', type=int))
+        brake.append(request.form.get('rod', type=int))
 
         train = Train(id, info, wheels, springs, dvs, transmission, pneumatics, device, brake, type_oil, data_check, type, date_maintenance)
         train.make_maintenance()
-    return render_template("grade.html", title="Провести оценку")
+    return render_template("grade.html", title="Провести оценку", list=info)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -169,13 +172,13 @@ def home():
 @login_required
 def machine_detail(id):
     info = []
-    info1 = []
+    info_to = []
     try:
         info = Machines.query.get(id)
-        info1 = Maintenance.query.filter_by(id_machine=id).order_by().all()
+        info_to = Maintenance.query.filter_by(id_machine=id).order_by().all()
     except:
         print("ошибка")
-    return render_template("machine_detail.html", list=info, list1=info1)
+    return render_template("machine_detail.html", list=info, list1=info_to)
 
 
 @app.route('/grade_detail/<int:id>')
@@ -183,7 +186,6 @@ def machine_detail(id):
 def grade_detail(id):
     info = []
     info_to = []
-
     try:
         info = Maintenance.query.get(id)
         info_to = Maintenance.query.filter_by(id_machine=id).order_by(Maintenance.date_maintenance.desc()).all()
@@ -251,7 +253,7 @@ def machine_update(id):
 
         try:
             db.session.commit()
-            return redirect('/home')
+            return redirect('/machine/'+str(id))
         except:
             print("ошибка")
     else:
@@ -259,29 +261,35 @@ def machine_update(id):
         return render_template("machine_update.html", list=info)
 
 
-@app.route('/excel')
+@app.route('/excel', methods=['POST', 'GET'])
 def excel():
     conn = sqlite3.connect('C:/Users/Admin/PycharmProjects/diplom/sweater/rzd.db')
-    df = pd.read_sql(
-        'SELECT id_maintenance, type, date_maintenance, grade_TO, repair FROM Maintenance WHERE id_machine=1', conn)
-    df.columns = ['Номер', 'Тип ТО', 'Дата ТО', 'Оценка', 'Ремонт']
-    df.to_excel(r'C:/Users/Admin/PycharmProjects/diplom/result.xlsx', sheet_name='Sheet1')
-    wb = xlsxwriter.Workbook('C:/Users/Admin/PycharmProjects/diplom/result.xlsx')
-    ws = wb.add_worksheet()
+    df = pd.read_sql('SELECT * FROM Maintenance', conn)
+    df.columns = ['Номер', 'Тип ТО', 'Дата ТО', 'Оценка', 'Ремонт', 'Статус', 'Номер машины']
 
-    f1 = wb.add_format({'font_color': 'blue', 'bold': True})
-    ws.conditional_format('A1:D4',
-                          {'type': 'formula',
-                           'criteria': '=AVERAGE($B1:$D1)>60',
-                           'value': 50,
-                           'format': f1
-                           })
-    wb.close()
+    def highlight_rows(s):
+        con = s.copy()
+        con[:] = None
+        if (s['Статус'] == 'Допущен'):
+            con[:] = "background-color: #98FB98"
+        elif (s['Статус'] == 'Не допущен'):
+            con[:] = "background-color: red"
+        else:
+            con[:] = "background-color: #F0E68C"
+        return con
 
+    styled = df.style.apply(highlight_rows, axis=1)
+    writer = pd.ExcelWriter('C:/Users/Admin/PycharmProjects/diplom/result.xlsx')
+    styled.to_excel(writer, sheet_name='my_analysis', engine='openpyxl', index=False)
+
+    #df.to_excel(writer, sheet_name='my_analysis', index=False, na_rep='NaN')
+
+    for column in df:
+        column_width = max(df[column].astype(str).map(len).max(), len(column))
+        col_idx = df.columns.get_loc(column)
+        writer.sheets['my_analysis'].set_column(col_idx, col_idx, column_width)
+
+    writer.save()
     flash('Файл успешно скачен в раздел загрузки', category='success')
     return redirect('/home')
 
-
-@app.route("/modal")
-def modal():
-    return render_template('/modal.html')

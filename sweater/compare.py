@@ -45,7 +45,6 @@ class Train_maintenance(object):
         elif oils[0] == 1.20 or oils[0] == 1.25:
             result_a = 3
             self.repair += "Проверить давление масла питательного насоса. "
-            self.status += "Допущен с ограничениями"
         else:
             result_a = 0
             self.repair += "Замените масло питательного насоса в гидропередаче. "
@@ -55,7 +54,6 @@ class Train_maintenance(object):
         elif oils[1] == 0.35 or oils[1] == 0.45:
             result_b = 3
             self.repair += "Проверить давление масла на выходе из гидротрансформатора. "
-            self.status += "Допущен с ограничениями"
         else:
             result_b = 0
             self.repair += "Замените масло в гидротрансформаторе. "
@@ -65,7 +63,6 @@ class Train_maintenance(object):
         elif oils[2] == 0.08 or oils[2] < 0.12:
             result_c = 3
             self.repair += "Проверить давление в системе смазки. "
-            self.status += "Допущен с ограничениями"
         else:
             result_c = 0
             self.repair += "Заменить смазку в гидропередаче. "
@@ -78,7 +75,6 @@ class Train_maintenance(object):
             result_a = 10
         elif dvs[0] == 35:
             result_a = 3
-            self.status += "Допущен с ограничениями"
         else:
             result_a = 0
             self.repair += "Замените масло в двигателе, наработка свыше 35 м.ч. "
@@ -88,7 +84,6 @@ class Train_maintenance(object):
         elif dvs[1] == 31 or dvs[1] == 33:
             result_b = 3
             self.repair += "Проверить количество смазки в двигателе. "
-            self.status += "Допущен с ограничениями"
         else:
             result_b = 0
             self.repair += "Добавить смазку в двигатель. "
@@ -98,7 +93,6 @@ class Train_maintenance(object):
         elif dvs[2] == 4 or dvs[2] == 7:
             result_c = 3
             self.repair += "Проверить давление масла при холостом пуске. "
-            self.status += "Допущен с ограничениями"
         else:
             result_c = 0
             self.repair += "Заменить масло в двигателе. "
@@ -108,7 +102,6 @@ class Train_maintenance(object):
         elif dvs[3] == 7 or dvs[3] == 11:
             result_d = 3
             self.repair += "Проверить натяжение ремней привода генератора. "
-            self.status += "Допущен с ограничениями"
         else:
             result_d = 0
             self.repair += "Заменить ремни привода генератора. "
@@ -118,7 +111,6 @@ class Train_maintenance(object):
         elif dvs[4] == 12 or dvs[4] == 12.8:
             result_e = 3
             self.repair += "Проверить напряжение генератора. "
-            self.status += "Допущен с ограничениями"
         else:
             result_e = 0
             self.repair += "Заменить генератор. "
@@ -159,7 +151,7 @@ class Train_maintenance(object):
 
     def complete_grade(self):
         self.markM = (self.wheels + self.springs + self.transmissions +
-                      self.brake + self.device + self.dvs +self.pneumatics )/7
+                      self.brake + self.device + self.dvs +self.pneumatics)/7
 
     def statusM(self):
         if (self.wheels == self.springs == self.dvs == self.transmissions ==
@@ -167,14 +159,12 @@ class Train_maintenance(object):
             self.status = "Допущен"
         elif self.status.count("Не допущен") != 0:
             self.status = "Не допущен"
-            print('Входит')
         else:
             self.status = "Допущен c ограничениями"
-        print(self.status.find("Не допущен"))
-        #elif self.repair != "":
-         #   self.status = "Недопущен"
 
     def change(self, info: []):
+        if self.repair == '':
+            self.repair = "Ремонт не требуется"
         info.grade = self.markM
         info.status = self.status
         try:
@@ -219,9 +209,10 @@ class Train_maintenance(object):
             db.session.commit()
 
             p = Pneumatics(compressor=pneumatics[0], density_PM=pneumatics[1], density_TM=pneumatics[2], density_TC=pneumatics[3],
-                           time_TC=pneumatics[4], density_UR=pneumatics[5], time_TM=pneumatics[6], time_UP=pneumatics[7],
-                           reducer=pneumatics[8], pace_1=pneumatics[9], pace_2=pneumatics[10], pace_3=pneumatics[11],
-                           EPK=pneumatics[12], grade_pneumatics=self.pneumatics, maintenance_id=m.id_maintenance)
+                           filling_TC=pneumatics[4],
+                           time_TC=pneumatics[5], density_UR=pneumatics[6], time_TM=pneumatics[7], time_UP=pneumatics[8],
+                           reducer=pneumatics[9], pace_1=pneumatics[10], pace_2=pneumatics[11], pace_3=pneumatics[12],
+                           EPK=pneumatics[13], grade_pneumatics=self.pneumatics, maintenance_id=m.id_maintenance)
             db.session.add(p)
             db.session.commit()
 
@@ -239,100 +230,121 @@ class Train_maintenance(object):
 
     def grade_pneumatics(self, pneumatics: [float]):
         print(pneumatics)
-        if 1.20 < pneumatics[0] < 1.25:
+        if 7.2 < pneumatics[0] < 8.2:
             result_a = 10
-        elif 1.15 < pneumatics[0] < 1.20 or 1.25 < pneumatics[0] < 1.30:
+        elif pneumatics[0] == 7.2 or pneumatics[0] == 8.2:
             result_a = 3
+            self.repair += "Проверить компрессор. "
         else:
             result_a = 0
-            self.repair += "Замените масло в двигателе"
-        if 0.35 < pneumatics[1] < 0.4:
+            self.repair += "Отремонтировать компрессор. "
+            self.status += "Не допущен"
+        if pneumatics[1] < 0.5:
             result_b = 10
-        elif 0.3 < pneumatics[1] < 0.35 or 0.4 < pneumatics[1] < 0.45:
+        elif pneumatics[1] == 0.5:
             result_b = 3
         else:
             result_b = 0
-            self.repair += "Замените охлаждающую жидкость"
-        if 0.08 < pneumatics[2] < 0.12:
+            self.repair += "Проверить утечки питательной магистрали. "
+            self.status += "Не допущен"
+        if pneumatics[2] < 0.5:
             result_c = 10
-        elif 0.05 < pneumatics[2] < 0.08 or 0.12 < pneumatics[2] < 0.15:
+        elif pneumatics[2] == 0.5:
             result_c = 3
         else:
             result_c = 0
-            self.repair += "Проверить давление"
-        if 0.35 < pneumatics[3] < 0.4:
+            self.repair += "Проверить утечки тормозной магистрали. "
+            self.status += "Не допущен"
+        if pneumatics[3] < 0.3:
             result_d = 10
-        elif 0.3 < pneumatics[3] < 0.35 or 0.4 < pneumatics[3] < 0.45:
+        elif pneumatics[3] == 0.3:
             result_d = 3
         else:
             result_d = 0
-            self.repair += "Замените охлаждающую жидкость"
-        if 0.08 < pneumatics[4] < 0.12:
+            self.repair += "Проверить колодки и выход штока тормозного цилиндра. "
+            self.status += "Не допущен"
+        if 4 < pneumatics[4]:
+            result_n = 10
+        elif pneumatics[4] == 4:
+            result_n = 3
+        else:
+            result_n = 0
+            self.repair += "Отрегулировать кран тормозного цилиндра. "
+            self.status += "Не допущен"
+        if 13 < pneumatics[5]:
             result_e = 10
-        elif 0.05 < pneumatics[4] < 0.08 or 0.12 < pneumatics[4] < 0.15:
+        elif pneumatics[5] == 13:
             result_e = 3
         else:
             result_e = 0
-            self.repair += "Проверить давление"
-        if 1.20 < pneumatics[5] < 1.25:
+            self.repair += "Вывернуть пробку на крышке тормозного цилиндра. "
+            self.status += "Не допущен"
+        if pneumatics[6] < 0.2:
             result_f = 10
-        elif 1.15 < pneumatics[5] < 1.20 or 1.25 < pneumatics[5] < 1.30:
+        elif pneumatics[6] == 0.2:
             result_f = 3
         else:
             result_f = 0
-            self.repair += "Замените масло в двигателе"
-        if 0.35 < pneumatics[6] < 0.4:
+            self.repair += "Нарушение уплотнение по штуцерам трубки уравнительного резервуара. "
+            self.status += "Не допущен"
+        if pneumatics[7] < 4:
             result_g = 10
-        elif 0.3 < pneumatics[6] < 0.35 or 0.4 < pneumatics[6] < 0.45:
+        elif pneumatics[7] == 4:
             result_g = 3
         else:
             result_g = 0
-            self.repair += "Замените охлаждающую жидкость"
-        if 0.08 < pneumatics[7] < 0.12:
+            self.repair += "Компенсировать повышенное давление в ТМ постановкой ручки крана в 5А. "
+            self.status += "Не допущен"
+        if 30 < pneumatics[8] < 40:
             result_h = 10
-        elif 0.05 < pneumatics[7] < 0.08 or 0.12 < pneumatics[7] < 0.15:
+        elif pneumatics[8] == 30 or pneumatics[8] == 40:
             result_h = 3
         else:
             result_h = 0
-            self.repair += "Проверить давление"
-        if 0.35 < pneumatics[8] < 0.4:
+            self.repair += "Почистить фильтр и открыть двухседельчатый клапан. "
+            self.status += "Не допущен"
+        if 5.0 < pneumatics[9] < 5.3:
             result_i = 10
-        elif 0.3 < pneumatics[8] < 0.35 or 0.4 < pneumatics[8] < 0.45:
+        elif pneumatics[9] == 5.0 or pneumatics[9] == 5.3:
             result_i = 3
         else:
             result_i = 0
-            self.repair += "Замените охлаждающую жидкость"
-        if 0.08 < pneumatics[9] < 0.12:
+            self.repair += "Отрегулировать редуктор давления. "
+            self.status += "Не допущен"
+        if pneumatics[10] < 5:
             result_j = 10
-        elif 0.05 < pneumatics[9] < 0.08 or 0.12 < pneumatics[9] < 0.15:
+        elif pneumatics[10] == 5:
             result_j = 3
         else:
             result_j = 0
-            self.repair += "Проверить давление"
-        if 1.20 < pneumatics[10] < 1.25:
+            self.repair += "Заменить манжету уравнительного поршня. "
+            self.status += "Не допущен"
+        if 80 < pneumatics[11] < 110:
             result_k = 10
-        elif 1.15 < pneumatics[10] < 1.20 or 1.25 < pneumatics[10] < 1.30:
+        elif pneumatics[11] == 110:
             result_k = 3
         else:
             result_k = 0
-            self.repair += "Замените масло в двигателе"
-        if 0.35 < pneumatics[11] < 0.4:
+            self.repair += "При помощи регулировочной гайки отрегулировать темп понижения. "
+            self.status += "Не допущен"
+        if pneumatics[12] < 3:
             result_l = 10
-        elif 0.3 < pneumatics[11] < 0.35 or 0.4 < pneumatics[11] < 0.45:
+        elif pneumatics[12] == 3:
             result_l = 3
         else:
             result_l = 0
-            self.repair += "Замените охлаждающую жидкость"
-        if 0.08 < pneumatics[12] < 0.12:
+            self.repair += "Сделать рахрядку тормозной магистрали. "
+            self.status += "Не допущен"
+        if pneumatics[13] == 7:
             result_m = 10
-        elif 0.05 < pneumatics[12] < 0.08 or 0.12 < pneumatics[12] < 0.15:
+        elif pneumatics[13] == 7.1 or pneumatics[13] == 6.9:
             result_m = 3
         else:
             result_m = 0
-            self.repair += "Проверить давление"
+            self.repair += "Отремонтировать электропневматический клапан. "
+            self.status += "Не допущен"
         self.pneumatics = (result_a + result_b + result_c + result_d + result_e + result_f + result_g +
-                           result_h + result_i + result_j + result_k + result_l + result_m) / 13
-
+                           result_h + result_i + result_j + result_k + result_l + result_m + result_n) / 14
 
 
 
