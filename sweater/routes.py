@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 import compare
 
 from sweater import app, db
-from sweater.models import User, Machines, Maintenance, Transmission, Dvs, Wheel, Springs, Device, Brakes, Pneumatics
+from sweater.models import User, Machines, Maintenance
 
 from sweater.Train import Train
 
@@ -70,6 +70,7 @@ def grade(id):
         pneumatics.append(request.form.get('density_PM', type=float))
         pneumatics.append(request.form.get('density_TM', type=float))
         pneumatics.append(request.form.get('density_TC', type=float))
+        pneumatics.append(request.form.get('filling_TC', type=float))
         pneumatics.append(request.form.get('time_TC', type=float))
         pneumatics.append(request.form.get('density_UR', type=float))
         pneumatics.append(request.form.get('time_TM', type=float))
@@ -261,11 +262,11 @@ def machine_update(id):
         return render_template("machine_update.html", list=info)
 
 
-@app.route('/excel', methods=['POST', 'GET'])
-def excel():
+@app.route('/excel/<int:id>/', methods=['POST', 'GET'])
+def excel_grade(id):
     conn = sqlite3.connect('C:/Users/Admin/PycharmProjects/diplom/sweater/rzd.db')
-    df = pd.read_sql('SELECT * FROM Maintenance', conn)
-    df.columns = ['Номер', 'Тип ТО', 'Дата ТО', 'Оценка', 'Ремонт', 'Статус', 'Номер машины']
+    df = pd.read_sql(' SELECT id_maintenance, type, date_maintenance, grade_TO, repair, status_TO FROM Maintenance WHERE id_machine='+str(id), conn)
+    df.columns = ['Номер', 'Вид ТО', 'Дата ТО', 'Оценка', 'Ремонт', 'Статус']
 
     def highlight_rows(s):
         con = s.copy()
@@ -273,13 +274,46 @@ def excel():
         if (s['Статус'] == 'Допущен'):
             con[:] = "background-color: #98FB98"
         elif (s['Статус'] == 'Не допущен'):
-            con[:] = "background-color: red"
+            con[:] = "background-color: #FA8072"
         else:
             con[:] = "background-color: #F0E68C"
         return con
 
     styled = df.style.apply(highlight_rows, axis=1)
     writer = pd.ExcelWriter('C:/Users/Admin/PycharmProjects/diplom/result.xlsx')
+    styled.to_excel(writer, sheet_name='my_analysis', engine='openpyxl', index=False)
+
+    #df.to_excel(writer, sheet_name='my_analysis', index=False, na_rep='NaN')
+
+    for column in df:
+        column_width = max(df[column].astype(str).map(len).max(), len(column))
+        col_idx = df.columns.get_loc(column)
+        writer.sheets['my_analysis'].set_column(col_idx, col_idx, column_width)
+
+    writer.save()
+    flash('Файл успешно скачен в раздел загрузки', category='success')
+    return redirect('/machine/'+str(id))
+
+
+@app.route('/excel', methods=['POST', 'GET'])
+def excel():
+    conn = sqlite3.connect('C:/Users/Admin/PycharmProjects/diplom/sweater/rzd.db')
+    df = pd.read_sql('SELECT * FROM Machines', conn)
+    df.columns = ['Номер', 'Идентификационный номер', 'Дата изготовления', 'Завод изготовитель', 'Срок эксплуатации', 'Собственник', 'Дата ввода в эксплуатацию', 'Оценка', 'Статус']
+
+    def highlight_rows(s):
+        con = s.copy()
+        con[:] = None
+        if (s['Статус'] == 'Допущен'):
+            con[:] = "background-color: #98FB98"
+        elif (s['Статус'] == 'Не допущен'):
+            con[:] = "background-color: #FA8072"
+        else:
+            con[:] = "background-color: #F0E68C"
+        return con
+
+    styled = df.style.apply(highlight_rows, axis=1)
+    writer = pd.ExcelWriter('C:/Users/Admin/PycharmProjects/diplom/Machines.xlsx')
     styled.to_excel(writer, sheet_name='my_analysis', engine='openpyxl', index=False)
 
     #df.to_excel(writer, sheet_name='my_analysis', index=False, na_rep='NaN')

@@ -30,7 +30,7 @@
         <button type="button" class="btn btn-danger my-2" data-bs-toggle="modal" data-bs-target="#exampleModal2">
   Удвлить выбранные записи
 </button>
-        <a class="btn btn-danger" href="/excel">Скачать Execl-файл</a>
+        <a class="btn btn-danger" href="/excel/{{ list.id_machine }}">Скачать Execl-файл</a>
         {% for cat, msg in get_flashed_messages(True) %}
         <div class="flash {{cat}}">{{msg}}</div>
         {%  endfor %}

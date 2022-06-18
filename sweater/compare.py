@@ -150,8 +150,10 @@ class Train_maintenance(object):
         print(self.status)
 
     def complete_grade(self):
-        self.markM = (self.wheels + self.springs + self.transmissions +
-                      self.brake + self.device + self.dvs +self.pneumatics)/7
+        self.markM = round(((self.wheels + self.springs + self.transmissions +
+                      self.brake + self.device + self.dvs +self.pneumatics)/7), 2)
+        if self.repair == '':
+            self.repair = "Ремонт не требуется"
 
     def statusM(self):
         if (self.wheels == self.springs == self.dvs == self.transmissions ==
@@ -163,8 +165,6 @@ class Train_maintenance(object):
             self.status = "Допущен c ограничениями"
 
     def change(self, info: []):
-        if self.repair == '':
-            self.repair = "Ремонт не требуется"
         info.grade = self.markM
         info.status = self.status
         try:
@@ -263,7 +263,7 @@ class Train_maintenance(object):
             result_d = 0
             self.repair += "Проверить колодки и выход штока тормозного цилиндра. "
             self.status += "Не допущен"
-        if 4 < pneumatics[4]:
+        if  pneumatics[4]<4:
             result_n = 10
         elif pneumatics[4] == 4:
             result_n = 3

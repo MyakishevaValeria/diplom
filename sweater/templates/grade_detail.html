@@ -18,7 +18,7 @@
         <p>Оценка: {{ list.grade_TO }}</p>
         <p>Ремонт: {{ list.repair }}</p>
     </div>
-           <h1>Замер разбега колёсных пар в буксовых направляющих</h1>
+           <h2>Замер разбега колёсных пар в буксовых направляющих: оценка - {{ list.d1.grade_wheel }}</h2>
            <table class="tabl" border="1" cellpadding="4" cellspacing="0" >
  <thead>
    <tr align="center">
@@ -83,7 +83,7 @@
                {% else %} style='background-color:#FA8072'{% endif %} in>{{ list.d1.second_lateral_l }}</td>
    </tr>
   </table>
-                 <h1>Замер рессорного подвешивания</h1>
+                 <h2>Замер рессорного подвешивания: оценка - {{ list.d2.grade_spring }}</h2>
            <table class="tabl" border="1" cellpadding="4" cellspacing="0">
  <thead>
    <tr align="center">
@@ -154,7 +154,7 @@
 
 
 </table>
-                   <h1>Приборы безопасности</h1>
+                   <h2>Приборы безопасности: оценка - {{ list.d6.grade_device }}</h2>
            <table class="tabl" border="1" cellpadding="4" cellspacing="0" >
  <thead>
    <tr align="center">
@@ -186,7 +186,7 @@
    </tr>
 
   </table>
-                        <h1>Дизель-генераторная установка:</h1>
+                        <h2>Дизель-генераторная установка:оценка - {{ list.d3.grade_dvs }}</h2>
            <table class="tabl" border="1" cellpadding="4" cellspacing="0">
  <thead>
    <tr align="center">
@@ -197,7 +197,7 @@
    </tr>
     </thead>
 
-     <tr><td {% if list.d3.time < 35 %} style='background-color:#98FB98'
+     <tr align="center"><td {% if list.d3.time < 35 %} style='background-color:#98FB98'
                {% elif 34 < list.d3.time< 36 %} style='background-color:#F0E68C'
                {% else %} style='background-color:#FA8072'{% endif %} in>{{ list.d3.time }}</td>
     <td  style='background-color:#98FB98'>{{ list.d3.type_oil }}</td>
@@ -207,7 +207,7 @@
 
 
   </table>
-        <h1>Технические показатели дизельного двигателя:</h1>
+        <h2>Технические показатели дизельного двигателя:</h2>
      <table class="tabl">
             <tr {% if 4 < list.d3.pressure_oil < 7 %} style='background-color:#98FB98'
                {% elif  4 == list.d3.pressure_oil or 7 == list.d3.pressure_oil %} style='background-color:#F0E68C'
@@ -218,9 +218,8 @@
             <tr {% if 12 < list.d3.voltage < 12.8 %} style='background-color:#98FB98'
                {% elif list.d3.voltage==12 or list.d3.voltage==12.8 %} style='background-color:#F0E68C'
                {% else %} style='background-color:#FA8072'{% endif %} in><td>Зарядное напряжение генератора:</td><td>{{ list.d3.voltage }}</td></tr>
-         <tr><td>Оценка:</td><td>{{ list.d3.grade_dvs }}</td></tr>
         </table>
- <h1>Гидропередача:</h1>
+ <h2>Гидропередача:оценка - {{ list.d4.grade_transmission }}</h2>
        <table class="tabl">
             <tr {% if 1.20 < list.d4.pressure_oil_p < 1.25 %} style='background-color:#98FB98'
                {% elif  1.20 == list.d4.pressure_oil_p or 1.25 == list.d4.pressure_oil_p %} style='background-color:#F0E68C'
@@ -231,10 +230,9 @@
             <tr {% if 0.08 < list.d4.pressure_oil_s < 0.12 %} style='background-color:#98FB98'
                {% elif  0.08 == list.d4.pressure_oil_s or 0.12 == list.d4.pressure_oil_s %} style='background-color:#F0E68C'
                {% else %} style='background-color:#FA8072'{% endif %} in><td>Давление в системе смазки:</td><td>{{ list.d4.pressure_oil_s }}</td></tr>
-         <tr><td>Оценка:</td><td>{{ list.d4.grade_transmission }}</td></tr>
         </table>
 
-<h1>Тормозное оборудование:</h1>
+<h2>Тормозное оборудование:оценка - {{ list.d7.grade_brake }}</h2>
      <table class="tabl">
             <tr><td>Дата поверки предохранительного клапана:</td><td>{{ list.d7.data_check }}</td></tr>
             <tr {% if list.d7.depth==20 %} style='background-color:#98FB98'
@@ -243,9 +241,9 @@
             <tr {% if 40 < list.d7.rod < 71 %} style='background-color:#98FB98'
                {% elif 70 < list.d7.rod < 101 %} style='background-color:#F0E68C'
                {% else %} style='background-color:#FA8072'{% endif %} in><td>Выход штока тормозного цилиндра:</td><td>{{ list.d7.rod }}</td></tr>
-         <tr><td>Оценка:</td><td>{{ list.d7.grade_brake }}</td></tr>
+
         </table>
-                  <h1>Приборы безопасности</h1>
+                  <h2>Пневматическая система:оценка - {{ list.d5.grade_pneumatics }}</h2>
            <table class="tabl" border="1" cellpadding="4" cellspacing="0">
  <thead>
  <tr align="center">
