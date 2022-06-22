@@ -29,8 +29,8 @@
         </div>
         <br><br>
          {% for cat, msg in get_flashed_messages(True) %}
-        <div class="flash {{cat}}">{{msg}}</div>
-        {%  endfor %}
+            <div class="flash {{cat}}">{{msg}}</div>
+         {% endfor %}
     </form>
 </div>
 {% endblock %}

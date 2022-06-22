@@ -12,7 +12,6 @@ import compare
 
 from sweater import app, db
 from sweater.models import User, Machines, Maintenance
-
 from sweater.Train import Train
 
 
@@ -27,7 +26,9 @@ def create():
         train.append(request.form['lifetime'])
         train.append(request.form['owner'])
         train.append(request.form['date_start'])
-        Train.create_train(train)
+        if Train.create_train(train):
+            next_page = request.args.get('next')
+            return redirect(url_for('home'))
     return render_template("create.html", title="Провести оценку")
 
 
@@ -94,7 +95,9 @@ def grade(id):
         brake.append(request.form.get('rod', type=int))
 
         train = Train(id, info, wheels, springs, dvs, transmission, pneumatics, device, brake, type_oil, data_check, type, date_maintenance)
-        train.make_maintenance()
+        if train.make_maintenance():
+            next_page = request.args.get('next')
+            return redirect('/machine/'+str(id))
     return render_template("grade.html", title="Провести оценку", list=info)
 
 

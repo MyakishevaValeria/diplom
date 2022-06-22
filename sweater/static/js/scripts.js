@@ -8,7 +8,7 @@ $('tr').each(function(){
       $(this).parent('tr').addClass('empty1');
       return false;
     }
-    if ($(this).html() == "Допущен с ограничениями") {
+    if ($(this).html() == "Допущен c ограничениями") {
       $(this).parent('tr').addClass('empty2');
       return false;
     }

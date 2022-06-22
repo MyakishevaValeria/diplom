@@ -27,6 +27,7 @@
 <h1>Технические обслуживания</h1>
     <p>
         <a class="btn btn-danger" href="/grade/{{ list.id_machine }}">Провести оценку технического состояния</a>
+        {% if list1|length > 0 %}
         <button type="button" class="btn btn-danger my-2" data-bs-toggle="modal" data-bs-target="#exampleModal2">
   Удвлить выбранные записи
 </button>
@@ -104,7 +105,9 @@
 
        </form>
         <div>
-
+{% else %}
+        <h2>Нет данных о технических обслуживаниях</h2>
+    {% endif %}
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>

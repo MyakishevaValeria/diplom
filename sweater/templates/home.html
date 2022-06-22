@@ -13,17 +13,18 @@
     <p class="lead">Назначение: машина выправочно-подбивочно-рихтовочная</p>
         <p class="lead">Способ выполнения работ: непрерывно-циклического действия</p>
 
-    {% if list|length > 0 %}
+
 <br>
     <p>
         <a class="btn btn-danger" href="/create">Добавить машину</a>
+        {% if list|length > 0 %}
         <a class="btn btn-danger" href="/excel">Скачать Execl-файл</a>
         {% for cat, msg in get_flashed_messages(True) %}
         <div class="flash {{cat}}">{{msg}}</div>
         {%  endfor %}
     </p>
 <button type="button" class="btn btn-danger my-2" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-  Удвлить выбранные записи
+  Удалить выбранные записи
 </button>
     <div id="remove">
        <form action="/remove" method="POST">
@@ -41,11 +42,11 @@
                    </thead>
                    <tbody>
                     {% for m in list %}
-                    <tr class="even" data-href="/machine/{{ m.id_machine }}">
+                    <tr class="even" data-href="/machine/{{ m.id_machine }}" >
                     <th><input type="checkbox" name="check" id="{{m.id_machine}}" value="{{m.id_machine}}"></th>
                     <td>{{ m.id_number }}</td>
                     <td>{{ m.owner }}</td>
-                        <td>{{ m.grade }}</td>
+                        <td >{{ m.grade }}</td>
                         <td>{{ m.status }}</td>
 
                     <td></td>
@@ -61,7 +62,7 @@
        </form>
    </div>
     {% else %}
-        <p>Нет записей в БД</p>
+        <p>Нет записей</p>
     {% endif %}
 </div>
 <script scr="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

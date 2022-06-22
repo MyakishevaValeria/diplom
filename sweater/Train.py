@@ -1,6 +1,7 @@
 import compare
 from sweater.models import User, Machines, Maintenance, Transmission, Dvs, Wheel, Springs, Device, Brakes, Pneumatics
 from sweater import app, db
+from flask import render_template, url_for, request, redirect, flash
 
 class Train(object):
     id_m: int
@@ -50,17 +51,23 @@ class Train(object):
                                                      self.device, self.brake, self.type_oil,
                                                      self.data_check, self.type, self.date_maintenance, self.id_m)
         self.maintenance.change(self.info)
+        next_page = request.args.get('next')
+        return redirect('/machine/'+str(self.id_m))
 
 
     @staticmethod
     def create_train(data: []):
+        grade = 0
+        status = '-'
         try:
             m = Machines(id_number=data[0], date_manufacture=data[1], name_factory=data[2],
-                         lifetime=data[3], owner=data[4], date_start=data[5])
+                         lifetime=data[3], owner=data[4], date_start=data[5], grade=grade, status=status)
 
             db.session.add(m)
             db.session.commit()
-
+            next_page = request.args.get('next')
+            return redirect(url_for('home'))
         except:
             print("ошибка")
+
 

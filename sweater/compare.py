@@ -67,7 +67,7 @@ class Train_maintenance(object):
             result_c = 0
             self.repair += "Заменить смазку в гидропередаче. "
             self.status += "Не допущен"
-        self.transmissions = (result_a + result_b + result_c) / 3
+        self.transmissions = round(((result_a + result_b + result_c) / 3),2)
         print(self.status)
 
     def grade_dvs(self, dvs: [float]):
@@ -115,7 +115,7 @@ class Train_maintenance(object):
             result_e = 0
             self.repair += "Заменить генератор. "
             self.status += "Не допущен"
-        self.dvs = (result_a + result_b + result_c + result_d + result_e) / 5
+        self.dvs = round(((result_a + result_b + result_c + result_d + result_e) / 5),2)
         print(self.status)
 
     def grade_device(self, device: [str]):
@@ -146,7 +146,7 @@ class Train_maintenance(object):
             result_b = 0
             self.repair += "Заменить шток тормозного цилиндра. "
             self.status += "Не допущен"
-        self.brake = (result_a + result_b) / 2
+        self.brake = round(((result_a + result_b) / 2),2)
         print(self.status)
 
     def complete_grade(self):
@@ -343,8 +343,8 @@ class Train_maintenance(object):
             result_m = 0
             self.repair += "Отремонтировать электропневматический клапан. "
             self.status += "Не допущен"
-        self.pneumatics = (result_a + result_b + result_c + result_d + result_e + result_f + result_g +
-                           result_h + result_i + result_j + result_k + result_l + result_m + result_n) / 14
+        self.pneumatics = round(((result_a + result_b + result_c + result_d + result_e + result_f + result_g +
+                           result_h + result_i + result_j + result_k + result_l + result_m + result_n) / 14),2)
 
 
 
